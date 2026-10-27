@@ -1,0 +1,62 @@
+{
+  "version": "0.1.0",
+  "status": "draft",
+  "rules": [
+    {
+      "id": "a11y.icon-button-name",
+      "category": "accessibility",
+      "severity": "high",
+      "kind": "deterministic",
+      "check": "Icon-only buttons must have an accessible name",
+      "source": "internal"
+    },
+    {
+      "id": "a11y.focus-visible",
+      "category": "accessibility",
+      "severity": "high",
+      "kind": "browser",
+      "check": "Interactive controls expose visible keyboard focus",
+      "source": "internal"
+    },
+    {
+      "id": "layout.responsive-overflow",
+      "category": "responsive",
+      "severity": "high",
+      "kind": "browser",
+      "check": "No unintended horizontal overflow at tested viewports",
+      "source": "internal"
+    },
+    {
+      "id": "visual.icon-consistency",
+      "category": "icons",
+      "severity": "medium",
+      "kind": "heuristic",
+      "check": "Icons use coherent family, size, and weight",
+      "source": "google/material-design-icons"
+    },
+    {
+      "id": "visual.generic-patterns",
+      "category": "anti-patterns",
+      "severity": "low",
+      "kind": "heuristic",
+      "check": "Flag repeated generic design patterns for contextual review",
+      "source": "Nutlope/hallmark"
+    },
+    {
+      "id": "visual.optical-alignment",
+      "category": "polish",
+      "severity": "low",
+      "kind": "heuristic",
+      "check": "Inspect icon and control optical alignment",
+      "source": "jakubkrehel/make-interfaces-feel-better"
+    },
+    {
+      "id": "component.mui-usage",
+      "category": "implementation",
+      "severity": "medium",
+      "kind": "static",
+      "check": "Validate component props against the installed MUI version",
+      "source": "mui/material-ui"
+    }
+  ]
+}
