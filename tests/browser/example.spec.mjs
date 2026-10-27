@@ -74,6 +74,7 @@ test('cancel and Escape preserve data; repeated opening restores focus; reset cl
   await expect(dialog).not.toBeVisible();
   await expect(name).toHaveValue('');
   await expect(page.getByRole('status')).toBeEmpty();
+  await expect(name).toBeFocused();
   await expect(reset).toBeDisabled();
   await expectAccessible(page, testInfo, 'reset');
 });

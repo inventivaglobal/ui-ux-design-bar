@@ -31,6 +31,7 @@ function App() {
   const [error, setError] = useState(false);
   const [resetOpen, setResetOpen] = useState(false);
   const inputRef = useRef(null);
+  const focusAfterReset = useRef(false);
   const dirty = name !== savedName;
   function save(event) {
     event.preventDefault();
@@ -44,6 +45,7 @@ function App() {
     setError(false);
   }
   function reset() {
+    focusAfterReset.current = true;
     setName('');
     setSavedName('');
     setError(false);
@@ -80,7 +82,7 @@ function App() {
               <Button type="button" variant="outlined" onClick={() => setResetOpen(true)} disabled={!name && !savedName}>Reset example</Button>
             </Stack>
             <Box role="status" aria-live="polite" aria-atomic="true">
-              {savedName && <Alert severity="success">Saved for this session: {savedName}</Alert>}
+              {savedName && <Alert severity="success" role="presentation">Saved for this session: {savedName}</Alert>}
             </Box>
           </Stack>
         </Paper>
@@ -94,7 +96,13 @@ function App() {
           </Stack>
         </Paper>
       </Stack>
-      <Dialog open={resetOpen} onClose={() => setResetOpen(false)} aria-labelledby="reset-title" aria-describedby="reset-description">
+      <Dialog open={resetOpen} onClose={() => setResetOpen(false)} aria-labelledby="reset-title" aria-describedby="reset-description"
+        slotProps={{ transition: { onExited: () => {
+          if (focusAfterReset.current) {
+            focusAfterReset.current = false;
+            inputRef.current?.focus();
+          }
+        } } }}>
         <DialogTitle id="reset-title">Reset this example?</DialogTitle>
         <DialogContent><DialogContentText id="reset-description">This clears the name saved in this page. Nothing outside this example changes.</DialogContentText></DialogContent>
         <DialogActions>
