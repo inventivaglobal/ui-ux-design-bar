@@ -1,0 +1,19 @@
+name: B.A.R CI
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  engine-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run engine tests
+        run: node --test tests/*.test.mjs
+      - name: Validate JSON manifests
+        run: |
+          node -e "const fs=require('fs'); for (const p of ['packages/tokens/tokens.json','packages/registry/components/action-button.json','packages/registry/icons/semantic-icons.json','packages/qa/rules.json']) JSON.parse(fs.readFileSync(p,'utf8')); console.log('JSON manifests valid')"
