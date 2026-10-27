@@ -2,7 +2,7 @@
 
 **BUILD + AUDIT + REPAIR** — a unified design intelligence, component library, and quality-assurance system for AI coding agents.
 
-> **Status: early architecture / pre-alpha.** The runtime, source integrations, automated checks, and repairs are planned; do not treat them as implemented or certified.
+> **Status: experimental / pre-alpha.** A small CLI and runnable MUI browser example are implemented. General-purpose audits, source integrations and automatic repairs remain unfinished; nothing is certified. See [implementation status](docs/IMPLEMENTATION-STATUS.md) for commands and verification limits.
 
 ## Mission
 
@@ -28,7 +28,7 @@
 - [Material UI](https://github.com/mui/material-ui) — component foundation.
 - [Material Design Icons](https://github.com/google/material-design-icons) — icon source.
 
-These are **upstream references, not bundled dependencies**. Their respective licences and asset terms must be reviewed before copying or redistributing material.
+These are **research references, not imported source or bundled skill rules**. The browser example installs Material UI, React and Emotion as external npm dependencies; it does not copy their source into this repository. Their respective licences and asset terms must be reviewed before copying or redistributing material.
 
 ## Initial delivery milestones
 
