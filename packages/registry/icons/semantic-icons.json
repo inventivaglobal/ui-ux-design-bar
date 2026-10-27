@@ -1,0 +1,18 @@
+{
+  "version": "0.1.0",
+  "status": "draft",
+  "source": "google/material-design-icons",
+  "defaultFamily": "material-symbols-outlined",
+  "roles": {
+    "navigation.home": "home",
+    "action.close": "close",
+    "action.delete": "delete",
+    "status.warning": "warning",
+    "status.success": "check_circle",
+    "action.search": "search"
+  },
+  "accessibility": {
+    "decorative": "aria-hidden=true",
+    "interactive": "accessible name required on containing control"
+  }
+}
