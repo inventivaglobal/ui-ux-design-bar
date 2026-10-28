@@ -12,6 +12,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - run: npm ci
       - name: Run engine tests
         run: node --test tests/*.test.mjs
       - name: Validate JSON manifests

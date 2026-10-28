@@ -16,6 +16,7 @@
     "check": "npm test && npm run build:example && npm run test:browser"
   },
   "dependencies": {
+    "@babel/parser": "7.29.0",
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.1",
     "@mui/material": "9.5.0",

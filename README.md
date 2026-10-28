@@ -2,7 +2,7 @@
 
 **BUILD + AUDIT + REPAIR** — a unified design intelligence, component library, and quality-assurance system for AI coding agents.
 
-> **Status: experimental / pre-alpha.** A small CLI and runnable MUI browser example are implemented. General-purpose audits, source integrations and automatic repairs remain unfinished; nothing is certified. See [implementation status](docs/IMPLEMENTATION-STATUS.md) for commands and verification limits.
+> **Status: experimental / pre-alpha.** A small CLI, runnable MUI browser example and one author-opted-in decorative-image repair are implemented. General-purpose audits, source integrations and broader automatic repairs remain unfinished; nothing is certified. See [implementation status](docs/IMPLEMENTATION-STATUS.md) for commands and verification limits.
 
 ## Mission
 
@@ -44,3 +44,8 @@ Do not claim a component is verified without passing tests. Do not silently rewr
 ## Repository
 
 Public home: https://github.com/inventivaglobal/ui-ux-design-bar
+
+## Try the repair lab
+
+Run `npm ci` then `npm run dev:example`, and open `/?demo=repair` on the local URL.
+The lab renders a deliberately broken fixture and the actual repair engine output, with a reversible preview and edit evidence. See [the bounded repair contract](docs/REPAIR-LOOP.md).

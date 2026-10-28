@@ -3,3 +3,6 @@ examples/mui-browser/dist/
 examples/mui-browser/src/GeneratedButton.jsx
 test-results/
 playwright-report/
+examples/mui-browser/src/BrokenCard.jsx
+examples/mui-browser/src/RepairedCard.jsx
+examples/mui-browser/src/repair-evidence.json
