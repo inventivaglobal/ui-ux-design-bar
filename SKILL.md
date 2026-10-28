@@ -25,4 +25,4 @@ Route AI agents through **BUILD**, **AUDIT**, and **REPAIR** workflows. This doc
 See README.md. Source material is not yet imported, audited, or licensed for redistribution here.
 
 ## Current status
-Draft only. No browser runner, component registry implementation, or automated repair tools are shipped in this repository yet.
+The agent-routing contract remains a draft. A small CLI and bounded MUI example with Playwright/axe checks are implemented; see `docs/IMPLEMENTATION-STATUS.md`. General-purpose browser audits, full component registry integration and automatic repairs are not implemented.

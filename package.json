@@ -1,0 +1,30 @@
+{
+  "name": "ui-ux-design-bar",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "generate:example": "node scripts/generate-example.mjs",
+    "dev:example": "npm run generate:example && vite examples/mui-browser --host 127.0.0.1",
+    "build:example": "npm run generate:example && vite build examples/mui-browser",
+    "preview:example": "vite preview examples/mui-browser --host 127.0.0.1 --port 4173 --strictPort",
+    "test:browser": "playwright test",
+    "check": "npm test && npm run build:example && npm run test:browser"
+  },
+  "dependencies": {
+    "@emotion/react": "11.14.0",
+    "@emotion/styled": "11.14.1",
+    "@mui/material": "9.5.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@playwright/test": "1.64.1",
+    "vite": "8.3.5"
+  }
+}
