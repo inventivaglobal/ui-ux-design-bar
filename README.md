@@ -49,3 +49,7 @@ Public home: https://github.com/inventivaglobal/ui-ux-design-bar
 
 Run `npm ci` then `npm run dev:example`, and open `/?demo=repair` on the local URL.
 The lab renders a deliberately broken fixture and the actual repair engine output, with a reversible preview and edit evidence. See [the bounded repair contract](docs/REPAIR-LOOP.md).
+
+## Audit a component folder
+
+`node engine/cli.mjs audit ./src` reports JSX/TSX findings together. Use `preview ./src` for a reviewable plan, then explicit `apply` / `undo` commands for bounded source changes. See [folder workflow and recovery](docs/FOLDER-WORKFLOW.md) before writing files.

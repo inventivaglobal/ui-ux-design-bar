@@ -43,3 +43,7 @@ npm run check
 Node tests cover refusal conditions, non-code text, multiple edits, idempotence and reversal. Browser tests cover the real generated output, before/after axe evidence, keyboard toggle, repeated repair and navigation. Existing form tests remain in the same run. GitHub CI uploads the HTML report, axe JSON, screenshots and failure traces.
 
 The API's `verified` field is a **static** re-audit; `verification.browserVerified` is always false because calling REPAIR does not launch a browser. Only a passing browser run for the exact generated source adds that evidence. No lint/type-check pipeline, full accessibility certification, screen-reader evaluation or arbitrary-site repair is claimed.
+
+## Explicit source-file workflow
+
+The `repair()` API and `repair <file>` command remain preview-only. The separate folder `preview` / `apply` / `undo` workflow can write reviewed changes with `--yes`; see [folder workflow](FOLDER-WORKFLOW.md) for its recovery contract.

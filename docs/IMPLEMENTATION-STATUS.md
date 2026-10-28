@@ -5,7 +5,7 @@
 - CLI for generating an MUI button template.
 - Conservative static checks for unnamed MUI IconButton and images without alt text.
 - Structured JSON findings with source line and severity.
-- One AST-selected repair: add empty alt text only to an image explicitly marked `data-bar-decorative="true"`, without spreads, semantic overrides or existing alt. Returns edit evidence and unresolved findings; never writes caller source files.
+- One AST-selected repair: add empty alt text only to an image explicitly marked `data-bar-decorative="true"`, without spreads, semantic overrides or existing alt. Returns edit evidence and unresolved findings; the repair API remains preview-only; the explicit folder CLI apply/undo workflow writes only reviewed bounded changes.
 - Node tests and CI for the engine and JSON manifests.
 - A runnable, client-only MUI example using the repository's semantic tokens and actual BUILD output.
 - Playwright browser checks for desktop and mobile Chromium, with axe WCAG A/AA scans, keyboard interactions, validation, duplicate-save disabling, reset confirmation, cancellation and focus restoration.
@@ -57,3 +57,7 @@ No lint or type-check pipeline is configured yet; the example uses JavaScript/JS
 ## First repair loop
 
 The repair lab (`/?demo=repair`) uses the real BUILD output and REPAIR output. Browser tests require the broken fixture to produce exactly one `image-alt` axe violation, and the repaired state to have none of the scanned violations. They cover desktop/mobile layout, keyboard toggling, repeated repair, reversal and Back navigation. Run results are commit-specific; see CI, not this document, for pass/fail evidence. Details: [repair contract](REPAIR-LOOP.md).
+
+## Folder workflow
+
+Recursive JSX/TSX audit reports, JSON repair previews, explicit apply/undo and recovery journals are implemented. See [folder workflow](FOLDER-WORKFLOW.md) for boundaries, stale-file safeguards, partial-failure recovery and metadata limitations. This does not add new repair rules or an arbitrary-app browser audit.
