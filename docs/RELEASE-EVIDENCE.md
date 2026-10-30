@@ -1,4 +1,4 @@
-# Standalone release evidence — 1.0.0-rc.1
+# Standalone release evidence — 1.0.0
 
 ## Exact tested implementation
 
@@ -8,7 +8,7 @@
 - [Browser artifact 12961971789](https://github.com/inventivaglobal/ui-ux-design-bar/actions/runs/41021829289/artifacts/12961971789), downloaded and checksum verified: `f28be033b0dc2f225f40fba89e588e023ee89122b88b8a742fb9e80b3b5df7c1`.
 - Artifact contains the Playwright report, attached axe/contrast JSON and rendered PNGs. CI artifacts expire after 14days; the explicit release job additionally attaches the same release-run browser report ZIP durably to the GitHub release.
 
-Subsequent documentation-only commits must still pass exact-commit CI. This record does not pretend a later commit was tested before its checks completed. Publication remains gated by main-commit CI; final user signoff is separate.
+Subsequent documentation-only commits must still pass exact-commit CI. This record does not pretend a later commit was tested before its checks completed. The owner approved publication and final stable signoff on 2026-10-30. Promotion to 1.0.0 changes version/docs only; publication remains gated by exact main-commit CI.
 
 ## Actual rendered review and fixes
 
@@ -44,3 +44,7 @@ Each source is a pinned, licensed original concept integration with actionable r
 Independent code review found and verified fixes for semantic decorative-image/SVG conflicts (including lowercase/namespaced attribute variants), redirect-origin bypass, wrong CLI nested status, baseline writes on incomplete runs, unbounded folder output, and unavailable transfer-byte false passes. These have regressions. CSS remains report-only; component substitution remains a manual proposal.
 
 Release workflow review verified read-only PR jobs, explicit main/[release] gating after tests, exact commit checkout/tag identity, no-overwrite policy, scoped ephemeral token and partial-failure documentation. The release job was correctly skipped on the PR. An actual release is not claimed until the main job and published assets are verified.
+
+## Stable promotion authorization
+
+After reviewing the tested candidate and its limits, the project owner explicitly approved publishing it and provided final signoff on 2026-10-30. Stable version 1.0.0 changes only package version/lock metadata and release documentation. The final PR and main CI must still run; the release tag and downloadable assets must be verified before reporting publication complete. No downstream application deployment or npm registry publication is implied.

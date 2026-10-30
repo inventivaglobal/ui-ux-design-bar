@@ -1,6 +1,6 @@
 # Implementation status
 
-**Candidate only; not signed off or published as a stable release.** See the [acceptance matrix](RELEASE-ACCEPTANCE.md) for gates. Version `1.0.0-rc.1` identifies the full-scope implementation candidate, not proof of readiness.
+**Stable 1.0.0 publication and final signoff authorized by the project owner on 2026-10-30.** See the [acceptance matrix](RELEASE-ACCEPTANCE.md) for gates. Version `1.0.0` promotes the verified candidate without functional changes. Publication is complete only when its exact main-commit CI, tag and downloadable assets are verified.
 
 Implemented: nine MUI wrappers/manifests and generator; manifest-backed replacement proposal workflow; semantic tokens/theme; six pinned local Material Symbols; six-source original QA rule/plan/review integration; JSX/TSX folder audits; parser-based CSS/modules report-only audits and baselines; four explicit-intent repair recipes; guarded preview/apply/undo journals; authorized configured-route browser runner with axe/responsive/performance/visual comparisons and heuristic focus/motion checks; CLI/library tarball and read-only stdio MCP; independent fixture and MUI gallery test suites.
 

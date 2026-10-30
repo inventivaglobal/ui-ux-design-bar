@@ -1,6 +1,6 @@
 # Full standalone release acceptance
 
-Version: **1.0.0-rc.1**. Implementation and scoped review gates have evidence; merge/versioned publication and final user signoff are separate decisions. No downstream application is a launch dependency. [Exact evidence and limitations](RELEASE-EVIDENCE.md).
+Version: **1.0.0**. Implementation and scoped review gates have evidence; the owner explicitly approved publication and final signoff on 2026-10-30. Exact final CI and downloadable-asset verification remain required. No downstream application is a launch dependency. [Exact evidence and limitations](RELEASE-EVIDENCE.md).
 
 | Roadmap capability | Functional acceptance | Status |
 |---|---|---|
@@ -12,12 +12,12 @@ Version: **1.0.0-rc.1**. Implementation and scoped review gates have evidence; m
 | Configured app browser audits | Separate non-MUI fixture; axe/responsive/focus/motion; HTTP/origin/redirect policy | Passed real Chromium CI; not arbitrary business-journey certification |
 | Visual/performance checks | PNG capture/compare/change/update; incomplete baseline withholding; overflow; navigation-time thresholds | Passed; byte metric explicitly unavailable, no fabricated pass |
 | Agent/package interfaces | CLI, pack/fresh install/exports, official-SDK stdio MCP and root confinement | Passed Node 22/24 CI |
-| Publication | Exact-main-commit CI-gated tag/tarball/checksum/browser-evidence release | Staged; not yet executed |
-| User signoff | Review delivered scope, evidence, limits and published artifact | Pending user decision |
+| Publication | Exact-main-commit CI-gated tag/tarball/checksum/browser-evidence release | Authorized; exact main CI and asset verification required |
+| User signoff | Review delivered scope, evidence, limits and published artifact | Explicit approval/signoff received 2026-10-30 |
 
-## Remaining release decision
+## Authorized stable release
 
-After final exact-commit CI, an authorized maintainer may mark PR 4 ready and merge with a deliberate `[release]` message to publish this candidate. That does not constitute a formal PR approval or user signoff. RC-to-stable promotion requires a separately reviewed version change; the candidate label is not silently removed. No npm registry account/credentials are configured.
+The owner has authorized merging PR 4 and publishing stable 1.0.0. The deliberate `[release]` merge message triggers publication only after exact-main-commit checks succeed. No formal GitHub review approval is implied or submitted. No npm registry credentials or downstream app changes are involved.
 
 ## Signoff checklist
 
@@ -28,6 +28,6 @@ After final exact-commit CI, an authorized maintainer may mark PR 4 ready and me
 - [x] Source/docs/notices/install behavior reviewed; no private downstream code/configuration included.
 - [ ] Final metadata/documentation commit CI passes.
 - [ ] Authorized merge and versioned artifact publication verified.
-- [ ] User reviews the result and gives final signoff.
+- [x] User reviewed the result and explicitly approved publication and final signoff (2026-10-30).
 
 Automated findings, advisory review, scoped manual acceptance, publication and user signoff are different states. Nothing here certifies all interfaces, routes, frameworks, screen readers, browsers or users.
