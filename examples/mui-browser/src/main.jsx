@@ -20,7 +20,7 @@ const theme = createTheme({
   shape: { borderRadius: tokens.radius.control },
   typography: { fontFamily: 'Inter, system-ui, sans-serif' },
   components: {
-    MuiButton: { styleOverrides: { root: {
+    MuiButton: { defaultProps: { disableRipple: true }, styleOverrides: { root: {
       minHeight: 44, textTransform: 'none', fontWeight: 600,
       '&.Mui-focusVisible': { outline: `3px solid ${tokens.color.focus.ring}`, outlineOffset: 3 },
     } } },

@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-import {settleVisuals} from './settle.mjs';
+import {settleVisuals,textContrast} from './settle.mjs';
 
 async function scan(page, testInfo, state) {
   await settleVisuals(page);
@@ -25,6 +25,8 @@ test('real repair removes the demonstrated axe violation, preserves BUILD output
   await expect(image).toHaveAttribute('alt', '');
   await expect(page.getByRole('status')).toContainText('0 findings');
   expect(await scan(page, testInfo, 'after')).toEqual([]);
+  await expect(page.locator('.MuiTouchRipple-root')).toHaveCount(0);
+  await textContrast(page.getByRole('button',{name:'Restore broken fixture'}),testInfo,'focused-repair-button');
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await testInfo.attach('repair-layout', { body: await page.screenshot({ fullPage: true, animations: 'disabled' }), contentType: 'image/png' });
   await page.getByRole('button', { name: 'Restore broken fixture' }).press('Enter');

@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-import {settleVisuals} from './settle.mjs';
+import {settleVisuals,textContrast} from './settle.mjs';
 
 async function expectAccessible(page, testInfo, state) {
   await settleVisuals(page);
@@ -44,6 +44,7 @@ test('validates, saves with the keyboard, disables duplicate save, and accepts e
   await expect(name).toHaveValue('Ada');
   await expect(save).toBeDisabled();
   await expectAccessible(page, testInfo, 'saved');
+  await textContrast(name,testInfo,'saved-input');
   await name.fill('Grace');
   await expect(save).toBeEnabled();
   await name.press('Enter');

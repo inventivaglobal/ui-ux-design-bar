@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-import {settleVisuals} from './settle.mjs';
+import {settleVisuals,textContrast} from './settle.mjs';
 test('curated gallery supports labelled controls, keyboard tabs, modal dismissal and responsive axe checks',async({page},testInfo)=>{
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto('/?demo=gallery');
@@ -8,6 +8,8 @@ test('curated gallery supports labelled controls, keyboard tabs, modal dismissal
  await page.getByRole('textbox',{name:'Record name'}).fill('Example');
  await settleVisuals(page);const filled=await new AxeBuilder({page}).analyze();
  await testInfo.attach('gallery-filled-axe',{body:JSON.stringify(filled,null,2),contentType:'application/json'});expect(filled.violations).toEqual([]);
+ await textContrast(page.getByRole('textbox',{name:'Record name'}),testInfo,'gallery-input');
+ await textContrast(page.getByRole('combobox',{name:'Record status'}),testInfo,'gallery-select');
  await page.getByRole('button',{name:'Clear record name'}).click();
  await expect(page.getByRole('textbox',{name:'Record name'})).toHaveValue('');
  await page.getByRole('combobox',{name:'Record status'}).click();await page.getByRole('option',{name:'Ready',exact:true}).click();
@@ -17,6 +19,7 @@ test('curated gallery supports labelled controls, keyboard tabs, modal dismissal
  const open=page.getByRole('button',{name:'Review record',exact:true});await open.click();
  await expect(page.getByRole('dialog',{name:'Review record'})).toBeVisible();
  await expect(page.locator('.MuiDialog-container')).toHaveCSS('opacity','1');
+ await textContrast(page.getByRole('button',{name:'Close review'}),testInfo,'gallery-dialog-button');
  await testInfo.attach('gallery-dialog',{body:await page.screenshot({fullPage:true,animations:'disabled'}),contentType:'image/png'});
  await settleVisuals(page);expect((await new AxeBuilder({page}).analyze()).violations).toEqual([]);
  const close=page.getByRole('button',{name:'Close review'});await close.focus();await page.keyboard.press('Tab');await expect(close).toBeFocused();await page.keyboard.press('Shift+Tab');await expect(close).toBeFocused();
