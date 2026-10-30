@@ -13,8 +13,9 @@ const report=path.join(root,'report.json');
 const env={...process.env,BAR_DESKTOP_TEST:'1',BAR_TEST_PROJECT:root,BAR_TEST_EXPORT_PATH:report,BAR_TEST_CONFIRM:'1'};
 delete env.ELECTRON_RUN_AS_NODE;
 const executablePath=process.env.BAR_DESKTOP_EXECUTABLE;
-const application=await electron.launch({...(executablePath?{executablePath}:{}),args:[...(!executablePath?['desktop/main.mjs']:[]),'--bar-desktop-test'],env,timeout:60000});
+let application;
 try {
+ application=await electron.launch({...(executablePath?{executablePath}:{}),args:[...(!executablePath?['desktop/main.mjs']:[]),'--bar-desktop-test'],env,timeout:60000});
  const page=await application.firstWindow();
  const runtime=await application.evaluate(()=>({...process.versions}));
  if(runtime.electron!=='45.1.0'||runtime.node!=='24.22.1')throw Error('Unexpected embedded runtime');
@@ -88,4 +89,4 @@ try {
  checks.push('selection','source and CSS audit','JSON export','read-only preview','apply','byte-exact undo','renderer isolation','invalid IPC rejected','source error feedback');
  fs.writeFileSync(path.join(output,'gui-report.json'),JSON.stringify({passed:true,checks,runtime,projectRoot:root,fixtureFile:'Card.tsx',originalFixture:original},null,2));
  console.log('Desktop GUI smoke passed: selection, audit, export, preview, apply, undo, isolation, errors.');
-}catch(error){fs.writeFileSync(path.join(output,'gui-report.json'),JSON.stringify({passed:false,checks,error:error.message,projectRoot:root},null,2));throw error;}finally{await application.close();if(process.env.BAR_TEST_KEEP_PROJECT!=='1')fs.rmSync(root,{recursive:true,force:true});}
+}catch(error){fs.writeFileSync(path.join(output,'gui-report.json'),JSON.stringify({passed:false,checks,error:error.message,projectRoot:root},null,2));throw error;}finally{await application?.close();if(process.env.BAR_TEST_KEEP_PROJECT!=='1')fs.rmSync(root,{recursive:true,force:true});}

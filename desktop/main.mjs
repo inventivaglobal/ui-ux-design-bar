@@ -35,7 +35,8 @@ function handle(channel,fn){ipcMain.handle(channel,async(event,...args)=>{
  if(exclusive)requestActive=true;
  try{return {ok:true,value:await fn(...args)};}catch(error){return {ok:false,error:error.message,journals:journals()};}finally{if(exclusive)requestActive=false;}
 });}
-await app.whenReady();
+// Do not top-level await readiness: Electron waits for ESM evaluation before ready.
+app.whenReady().then(async()=>{
 session.defaultSession.setPermissionRequestHandler((_wc,_permission,callback)=>callback(false));
 session.defaultSession.setPermissionCheckHandler(()=>false);
 session.defaultSession.webRequest.onBeforeRequest((details,callback)=>callback({cancel:!assets.has(details.url)}));
@@ -61,4 +62,9 @@ handle('bar:undo',async journal=>{selected();idle();if(typeof journal!=='string'
 handle('bar:cancel',async()=>{if(!job)return false;if(['apply','undo'].includes(job.action))throw new Error('Writes cannot be cancelled. Wait for the operation to finish.');await job.worker.terminate();return true;});
 handle('bar:export',async()=>{idle();if(!report)throw new Error('Run an audit first.');const target=test?process.env.BAR_TEST_EXPORT_PATH:(await dialog.showSaveDialog(window,{title:'Export audit report',defaultPath:'bar-report.json',filters:[{name:'JSON report',extensions:['json']}]})).filePath;if(!target)return null;if(path.extname(target).toLowerCase()!=='.json')throw new Error('Reports must use the .json extension.');fs.writeFileSync(target,JSON.stringify(report,null,2),{encoding:'utf8',mode:0o600});return target;});
 await window.loadURL(page);
+}).catch(error=>{
+ console.error('B.A.R startup failed:',error);
+ if(!test)dialog.showErrorBox('B.A.R could not start',String(error.message||error));
+ app.exit(1);
+});
 app.on('window-all-closed',()=>app.quit());
