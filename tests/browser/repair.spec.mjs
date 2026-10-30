@@ -1,7 +1,9 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import {settleVisuals} from './settle.mjs';
 
 async function scan(page, testInfo, state) {
+  await settleVisuals(page);
   const result = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();
   await testInfo.attach(`repair-${state}`, { body: JSON.stringify(result, null, 2), contentType: 'application/json' });
   return result.violations;
@@ -24,7 +26,7 @@ test('real repair removes the demonstrated axe violation, preserves BUILD output
   await expect(page.getByRole('status')).toContainText('0 findings');
   expect(await scan(page, testInfo, 'after')).toEqual([]);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
-  await testInfo.attach('repair-layout', { body: await page.screenshot({ fullPage: true }), contentType: 'image/png' });
+  await testInfo.attach('repair-layout', { body: await page.screenshot({ fullPage: true, animations: 'disabled' }), contentType: 'image/png' });
   await page.getByRole('button', { name: 'Restore broken fixture' }).press('Enter');
   await expect(image).not.toHaveAttribute('alt');
   await page.getByRole('button', { name: 'Preview safe repair' }).press('Enter');

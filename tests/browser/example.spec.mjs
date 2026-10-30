@@ -1,7 +1,9 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import {settleVisuals} from './settle.mjs';
 
 async function expectAccessible(page, testInfo, state) {
+  await settleVisuals(page);
   const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();
   await testInfo.attach(`axe-${state}`, { body: JSON.stringify(results, null, 2), contentType: 'application/json' });
   expect(results.violations).toEqual([]);
@@ -21,7 +23,7 @@ test('renders engine output, token styling and responsive layout without runtime
   await expect(generated).toHaveCSS('background-color', 'rgb(21, 94, 239)');
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await expectAccessible(page, testInfo, 'initial');
-  await testInfo.attach('initial-layout', { body: await page.screenshot({ fullPage: true }), contentType: 'image/png' });
+  await testInfo.attach('initial-layout', { body: await page.screenshot({ fullPage: true, animations: 'disabled' }), contentType: 'image/png' });
   expect(errors).toEqual([]);
 });
 
@@ -60,6 +62,9 @@ test('cancel and Escape preserve data; repeated opening restores focus; reset cl
   const dialog = page.getByRole('dialog', { name: 'Reset this example?' });
   await expect(dialog).toBeVisible();
   await expect(page.getByRole('button', { name: 'Cancel' })).toBeFocused();
+  await page.keyboard.press('Tab');await expect(page.getByRole('button',{name:'Reset now'})).toBeFocused();
+  await page.keyboard.press('Tab');await expect(page.getByRole('button',{name:'Cancel'})).toBeFocused();
+  await page.keyboard.press('Shift+Tab');await expect(page.getByRole('button',{name:'Reset now'})).toBeFocused();
   await expectAccessible(page, testInfo, 'dialog');
   await page.keyboard.press('Escape');
   await expect(dialog).not.toBeVisible();

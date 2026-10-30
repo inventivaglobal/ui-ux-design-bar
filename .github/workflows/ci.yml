@@ -43,3 +43,55 @@ jobs:
             playwright-report/
             test-results/
           retention-days: 14
+  release:
+    name: Publish explicit GitHub release
+    needs: [engine-tests, browser-example]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[release]')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm ci --ignore-scripts
+      - uses: actions/download-artifact@v4
+        with:
+          name: browser-example-report
+          path: release-browser-evidence
+      - name: Pack exact tested source and checksum
+        run: |
+          mkdir release-artifacts
+          npm pack --ignore-scripts --json --pack-destination release-artifacts > release-artifacts/pack.json
+          (cd release-browser-evidence && zip -qr ../release-artifacts/browser-evidence.zip .)
+          cd release-artifacts
+          sha256sum *.tgz browser-evidence.zip > SHA256SUMS
+      - name: Publish no-overwrite versioned artifact (never npm)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          version=$(node -p "require('./package.json').version")
+          [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?$ ]] || { echo 'Invalid release version'; exit 1; }
+          tag="v$version"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            echo 'Release already exists; refusing to overwrite release assets.'
+            exit 1
+          fi
+          # Create the lightweight tag atomically, or accept only an exact retry target.
+          if existing=$(gh api "repos/$GH_REPO/git/ref/tags/$tag" --jq '.object.type + ":" + .object.sha' 2>/dev/null); then
+            [[ "$existing" == "commit:$GITHUB_SHA" ]] || { echo 'Tag points elsewhere; refusing release'; exit 1; }
+          else
+            gh api --method POST "repos/$GH_REPO/git/refs" -f ref="refs/tags/$tag" -f sha="$GITHUB_SHA" >/dev/null
+          fi
+          actual=$(gh api "repos/$GH_REPO/git/ref/tags/$tag" --jq '.object.type + ":" + .object.sha')
+          [[ "$actual" == "commit:$GITHUB_SHA" ]] || { echo 'Tag verification failed'; exit 1; }
+          options=()
+          if [[ "$version" == *-* ]]; then options+=(--prerelease); fi
+          gh release create "$tag" release-artifacts/*.tgz release-artifacts/browser-evidence.zip release-artifacts/SHA256SUMS release-artifacts/pack.json \
+            --verify-tag --target "$GITHUB_SHA" --title "B.A.R $version" --notes-file docs/RELEASE-NOTES.md "${options[@]}"
