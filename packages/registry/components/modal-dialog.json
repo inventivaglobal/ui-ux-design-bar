@@ -1,0 +1,22 @@
+{
+  "id": "modal-dialog",
+  "status": "curated",
+  "foundation": "@mui/material/Dialog",
+  "requiredChecks": [
+    "accessible-name",
+    "focus-trap",
+    "escape-dismissal",
+    "focus-restoration"
+  ],
+  "replacement": {
+    "requiresApproval": true,
+    "preserve": [
+      "event-handlers",
+      "controlled-state",
+      "form-semantics",
+      "aria-*",
+      "data-*"
+    ]
+  },
+  "source": "mui/material-ui"
+}

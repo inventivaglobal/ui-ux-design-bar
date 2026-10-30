@@ -1,63 +1,19 @@
 # Implementation status
 
-## Implemented (experimental)
+**Candidate only; not signed off or published as a stable release.** See the [acceptance matrix](RELEASE-ACCEPTANCE.md) for gates. Version `1.0.0-rc.1` identifies the full-scope implementation candidate, not proof of readiness.
 
-- CLI for generating an MUI button template.
-- Conservative static checks for unnamed MUI IconButton and images without alt text.
-- Structured JSON findings with source line and severity.
-- One AST-selected repair: add empty alt text only to an image explicitly marked `data-bar-decorative="true"`, without spreads, semantic overrides or existing alt. Returns edit evidence and unresolved findings; the repair API remains preview-only; the explicit folder CLI apply/undo workflow writes only reviewed bounded changes.
-- Node tests and CI for the engine and JSON manifests.
-- A runnable, client-only MUI example using the repository's semantic tokens and actual BUILD output.
-- Playwright browser checks for desktop and mobile Chromium, with axe WCAG A/AA scans, keyboard interactions, validation, duplicate-save disabling, reset confirmation, cancellation and focus restoration.
-- Browser CI configuration and downloadable HTML report, axe evidence, screenshots and failure traces. Added tests are not proof of a passing run; inspect the CI result for the exact commit.
+Implemented: nine MUI wrappers/manifests and generator; manifest-backed replacement proposal workflow; semantic tokens/theme; six pinned local Material Symbols; six-source original QA rule/plan/review integration; JSX/TSX folder audits; parser-based CSS/modules report-only audits and baselines; four explicit-intent repair recipes; guarded preview/apply/undo journals; authorized configured-route browser runner with axe/responsive/performance/visual comparisons and heuristic focus/motion checks; CLI/library tarball and read-only stdio MCP; independent fixture and MUI gallery test suites.
 
-## Not implemented
+Not claimed: complete upstream engines/datasets imported, automatic whole-app redesign, safe automatic component substitution, all frameworks/browsers/routes/states supported, subjective design decisions automated, full accessibility certification, browser results for code not actually run, npm registry publication or user signoff.
 
-- General-purpose browser audit of arbitrary applications, full AST analysis, full accessibility tree evaluation, screenshot baseline regression, broad responsive QA, performance testing, general-purpose automatic repairs, full component registry integration, actual Material Symbols asset integration, all six upstream skill rule imports, plugin packaging, and verified production releases.
+## Verification
 
-The example is a bounded integration test, not a finished B.A.R audit engine. It uses in-memory state only; no backend, account or persistence is involved.
+`npm test`: Node contracts, parsing, escaping, safety, source provenance, registry rendering, MCP SDK client handshake. `npm run test:package`: pack → fresh install → CLI and exports. `npm run check`: Node tests → generated demo production build → desktop/mobile Chromium tests. CI additionally runs package smoke. Browser tests cover the MUI form/repair/gallery and separately served non-MUI fixtures; they do not test a downstream customer application.
 
-## Run the engine
+Local Node/package/build checks have run; final counts and exact-commit browser CI evidence belong in the release acceptance record. Local Chromium launch was blocked by sandbox socket permissions before any browser assertions; do not count these cases as passes. CI must execute them before release.
 
-```sh
-npm ci
-npm test
-node engine/cli.mjs build "Save"
-node engine/cli.mjs audit path/to/Component.jsx
-node engine/cli.mjs repair path/to/Component.jsx
-```
+## Limits
 
-## Run the MUI browser example
+Some non-image legacy static checks remain regex heuristics. Unsupported/malformed JSX/TSX is not a clean audit. CSS duplicates are context-scoped review candidates, not removal instructions. Dynamic/generated styles and module exports remain uncertain. Folder source budgets refuse oversized work rather than claiming exhaustive success.
 
-Node 22.12+ and npm are required. Dependencies are pinned in `package-lock.json`.
-
-```sh
-npm ci
-npm run dev:example
-```
-
-To build and verify the production example:
-
-```sh
-npx playwright install --with-deps chromium
-npm run check
-npx playwright show-report
-```
-
-`npm run check` runs the engine tests, generates the example button and before/after repair fixtures, builds the app, then runs browser tests against the production preview. Playwright starts and stops its own server at `127.0.0.1:4173`; that port must be free. For an existing compatible Chromium installation, set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` to its absolute path. Otherwise Playwright uses its managed Chromium.
-
-Reports are written to `playwright-report/` and `test-results/` (ignored by git). Screenshots are inspection evidence, not visual regression baselines. The CI job uploads these reports even on failure.
-
-## Verification limits
-
-Non-image static checks still use regex and may produce false positives. Image detection uses a JSX/TSX parser, not runtime component resolution; invalid or unsupported source is not repaired and may have no static image findings. An empty audit result is not a clean bill of health. Automated axe checks cover only detectable issues in the tested states. Manual screen-reader testing, additional browsers, zoom, reduced motion and broader user journeys remain outside this example's coverage. Do not claim an interface is accessible or certified based on these checks alone.
-
-No lint or type-check pipeline is configured yet; the example uses JavaScript/JSX, not TypeScript.
-
-## First repair loop
-
-The repair lab (`/?demo=repair`) uses the real BUILD output and REPAIR output. Browser tests require the broken fixture to produce exactly one `image-alt` axe violation, and the repaired state to have none of the scanned violations. They cover desktop/mobile layout, keyboard toggling, repeated repair, reversal and Back navigation. Run results are commit-specific; see CI, not this document, for pass/fail evidence. Details: [repair contract](REPAIR-LOOP.md).
-
-## Folder workflow
-
-Recursive JSX/TSX audit reports, JSON repair previews, explicit apply/undo and recovery journals are implemented. See [folder workflow](FOLDER-WORKFLOW.md) for boundaries, stale-file safeguards, partial-failure recovery and metadata limitations. This does not add new repair rules or an arbitrary-app browser audit.
+Browser audits only observe configured URLs/viewports in clean contexts, no authenticated sessions or arbitrary business-journey scripts. Every redirect is refused. GET/page/keyboard handlers can have effects despite request restrictions; authorization acknowledgment is mandatory. Performance measurements are lab observations, not field Core Web Vitals certification. Transfer-byte measurement is unavailable under request interception; an explicitly configured byte budget reports incomplete, never a zero-byte pass. Observed header budgets are advisory, not hard bandwidth caps. Visual comparison is strict PNG hashing, sensitive to platform/fonts/content and requiring reviewed baselines. No configured baseline means no visual regression verdict. Focus and motion checks are review hints, not full keyboard or reduced-motion certification. Manual screen-reader, content and product-fit review remain explicit.

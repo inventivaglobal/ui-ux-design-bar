@@ -1,55 +1,57 @@
 # UI/UX Design B.A.R
 
-**BUILD + AUDIT + REPAIR** — a unified design intelligence, component library, and quality-assurance system for AI coding agents.
+**BUILD + AUDIT + REPAIR** — a standalone toolkit for AI-assisted interface work.
 
-> **Status: experimental / pre-alpha.** A small CLI, runnable MUI browser example and one author-opted-in decorative-image repair are implemented. General-purpose audits, source integrations and broader automatic repairs remain unfinished; nothing is certified. See [implementation status](docs/IMPLEMENTATION-STATUS.md) for commands and verification limits.
+**Release candidate in development, not signed off.** Implemented capabilities are listed below; final browser CI and release acceptance must pass before publication. No interface is certified by an empty report. [Acceptance matrix](docs/RELEASE-ACCEPTANCE.md) · [Status](docs/IMPLEMENTATION-STATUS.md)
 
-## Mission
+## Build
 
-- **BUILD:** choose coherent design tokens, accessible components, icons, patterns, and layouts.
-- **AUDIT:** inspect code and rendered interfaces for accessibility, responsiveness, consistency, interactions, and visual quality.
-- **REPAIR:** propose safe fixes or component replacements, preserve application behaviour, and verify results.
+Nine curated React/MUI patterns, semantic tokens/theme adapter, six locally bundled Material Symbols, validated component manifests and safe JSX starter generation. Components preserve explicit application callbacks rather than inventing business logic. [Library](docs/COMPONENT-LIBRARY.md)
 
-## Architecture
+## Audit
 
-1. **Foundation:** Material UI as an upstream dependency, extended through our own curated component registry and semantic token layer. Prefer an adapter over maintaining a permanent full fork.
-2. **Icon intelligence:** Google's Material Symbols / Material Design Icons with semantic aliases, consistency checks, and accessibility guidance.
-3. **Design intelligence:** consolidate overlapping guidance from six projects into provenance-tracked, context-aware QA rules.
-4. **Execution:** agent-facing skill and optional tool/MCP interface for retrieval, browser checks, source transformations, and regression verification.
+- Recursive JSX/TSX source findings; parser-backed image/repair selection.
+- CSS/modules parsing, token namespaces, scoped duplicate candidates, static/dynamic inline styles, imported class references and comparable report baselines. Report-only: no CSS is rewritten.
+- Configured HTTP(S) route browser audits with axe, viewport overflow, navigation-time performance budgets (byte measurements explicitly unavailable under request interception), exact-PNG visual baseline comparison, optional focus sampling and reduced-motion heuristics. Requires explicit target authorization acknowledgment. [Browser safety/config](docs/BROWSER-AUDIT.md)
+- Six pinned, licensed research-source integrations consolidated into 24 actionable rules, context-aware BUILD/AUDIT/REPAIR plans and evidence-bearing review records. These are original curated workflows, **not wholesale upstream engines or search datasets**. Heuristic judgments stay advisory. [Source integration](docs/QA-SOURCES.md)
 
-## Research sources
+## Repair
 
-- [oil-ui](https://github.com/oil-oil/oil-ui) — design exploration and visual comparison.
-- [daisyUI Skill](https://daisyui.com/docs/skill/?lang=en) — component and framework knowledge.
-- [Hallmark](https://github.com/Nutlope/hallmark) — anti-pattern detection and independent review.
-- [Impeccable](https://impeccable.style/) — critique, polish, and hardening operations.
-- [Make Interfaces Feel Better](https://github.com/jakubkrehel/make-interfaces-feel-better) — micro-interactions and visual details.
-- [UI UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) — design references and platform-aware guidance.
-- [Material UI](https://github.com/mui/material-ui) — component foundation.
-- [Material Design Icons](https://github.com/google/material-design-icons) — icon source.
+Author-opted-in decorative image alt, exact control labels, native button types and noninteractive decorative SVG semantics. Unknown intent remains a suggestion. JSON preview, approved-transform validation, stale-file checks, journaled apply and undo. Manifest-backed replacement suggestions include evidence, confidence, preservation checks and mandatory manual approval; they do not emit executable substitutions. No automatic wholesale component substitution or business-logic changes. [Workflow](docs/FOLDER-WORKFLOW.md) · [Recipes](docs/REPAIR-RECIPES.md)
 
-These are **research references, not imported source or bundled skill rules**. The browser example installs Material UI, React and Emotion as external npm dependencies; it does not copy their source into this repository. Their respective licences and asset terms must be reviewed before copying or redistributing material.
+## Run
 
-## Initial delivery milestones
+Node 22 LTS (22.18+) or Node 24.11+:
 
-1. Curated token schema, MUI adapter, component and icon manifests.
-2. Deduplicated QA rule catalogue with source attribution and severity.
-3. Browser, accessibility, interaction, responsive and screenshot audit runner.
-4. Safe replacement pipeline with test gates, rollback and evidence-based reports.
+```sh
+npm ci
+node engine/cli.mjs --help
+node engine/cli.mjs registry
+node engine/cli.mjs qa-plan
+node engine/cli.mjs qa-rules
+node engine/cli.mjs audit ./src
+node engine/cli.mjs audit-css ./src
+node engine/cli.mjs preview ./src > plan.json
+# Inspect the entire plan before an explicit apply:
+node engine/cli.mjs apply ./src plan.json --yes
+npm run dev:example
+```
 
-## Quality policy
+Example routes: `/`, `/?demo=repair`, `/?demo=gallery`. They use local in-memory state, not a production service.
 
-Do not claim a component is verified without passing tests. Do not silently rewrite business logic. Distinguish deterministic failures from heuristic design suggestions. Prefer small, reversible changes.
+`npm pack` creates an installable local tarball exposing `bar`, `bar-mcp`, and library exports. npm registry publication is separate and is **not claimed**. The optional stdio MCP adapter exposes only read/preview/source-generation tools within one configured workspace. [MCP](docs/MCP.md)
 
-## Repository
+## Verify
 
-Public home: https://github.com/inventivaglobal/ui-ux-design-bar
+```sh
+npm test
+npm run test:package
+npx playwright install --with-deps chromium
+npm run check
+```
 
-## Try the repair lab
+See exact-commit CI and [release checklist](docs/RELEASE-ACCEPTANCE.md). Browser tests include both the MUI demo and a separately hosted non-MUI fixture. No downstream application is a launch dependency.
 
-Run `npm ci` then `npm run dev:example`, and open `/?demo=repair` on the local URL.
-The lab renders a deliberately broken fixture and the actual repair engine output, with a reversible preview and edit evidence. See [the bounded repair contract](docs/REPAIR-LOOP.md).
+## Licensing and safety
 
-## Audit a component folder
-
-`node engine/cli.mjs audit ./src` reports JSX/TSX findings together. Use `preview ./src` for a reviewable plan, then explicit `apply` / `undo` commands for bounded source changes. See [folder workflow and recovery](docs/FOLDER-WORKFLOW.md) before writing files.
+GPL-3.0-only; upstream notices and pinned provenance are included in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Never run browser audits against apps you are not authorized to exercise: even GET navigation, page scripts, screenshot lifecycle and keyboard/focus handlers can have side effects. Reports/screenshots may contain sensitive UI content. Keep artifacts private and review before sharing.

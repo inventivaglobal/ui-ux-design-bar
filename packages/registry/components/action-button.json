@@ -1,26 +1,19 @@
 {
   "id": "action-button",
-  "status": "draft",
+  "status": "curated",
   "foundation": "@mui/material/Button",
-  "purpose": "Primary and secondary user actions",
-  "variants": [
-    "primary",
-    "secondary",
-    "destructive"
-  ],
   "requiredChecks": [
     "accessible-name",
     "keyboard-activation",
     "focus-visible",
-    "contrast",
     "disabled-state"
   ],
   "replacement": {
     "requiresApproval": true,
     "preserve": [
-      "onClick",
-      "type",
-      "form",
+      "event-handlers",
+      "controlled-state",
+      "form-semantics",
       "aria-*",
       "data-*"
     ]

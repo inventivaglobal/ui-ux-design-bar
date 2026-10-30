@@ -30,7 +30,7 @@ export function scanJsxImages(source) {
       const decorative = markers.length === 1 && markers[0].value?.type === 'StringLiteral' && markers[0].value.value === 'true';
       const spread = attrs.some(a => a.type === 'JSXSpreadAttribute');
       // Spreads may supply alt, roles or image intent. Refuse to guess.
-      const semantic = attrs.some(a => a.type === 'JSXAttribute' && ['role', 'aria-label', 'aria-labelledby'].includes(a.name.name));
+      const semantic = attrs.some(a => { if(a.type!=='JSXAttribute')return false; const name=(a.name.type==='JSXIdentifier'?a.name.name:a.name.namespace.name+':'+a.name.name.name).toLowerCase(); return /^aria-/.test(name)||/^on/.test(name)||['role','title','tabindex','usemap','ismap','href','xlinkhref','xlink:href'].includes(name); });
       images.push({ start: node.start - offset, insert: node.name.end - offset, hasAlt, fixable: !hasAlt && decorative && !spread && !semantic });
     }
     for (const [key, value] of Object.entries(node)) {

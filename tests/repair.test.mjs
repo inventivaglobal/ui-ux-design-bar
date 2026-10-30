@@ -38,7 +38,7 @@ test('does not change comments, strings or template text', () => {
 });
 
 test('handles quoted >, multiline modules, multiple edits and unresolved findings', () => {
-  const input = 'import React from "react";\nexport default () => <><img title="a > b"\n data-bar-decorative="true" /><img data-bar-decorative="true"/><img src="meaningful.png" /></>;';
+  const input = 'import React from "react";\nexport default () => <><img data-caption="a > b"\n data-bar-decorative="true" /><img data-bar-decorative="true"/><img src="meaningful.png" /></>;';
   const result = repair(input);
   assert.equal(result.changes.length, 2);
   assert.equal(result.unresolved.length, 1);

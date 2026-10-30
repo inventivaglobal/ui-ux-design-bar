@@ -1,5 +1,6 @@
 import { audit } from './audit.mjs';
 import { jsxImages } from './jsx-images.mjs';
+import { repairCandidates } from './jsx-elements.mjs';
 
 // Explicit author intent only: decorative images may receive empty alt text.
 // Output is a preview; neither the API nor CLI writes the caller's source file.
@@ -10,6 +11,8 @@ export function repair(source, filename = 'input.jsx') {
     before: '', after: ' alt=""',
     reason: 'Author explicitly marked this image data-bar-decorative="true".',
   }));
+  changes.push(...repairCandidates(source).changes);
+  changes.sort((a,b) => a.start-b.start);
   let output = source;
   for (const change of [...changes].reverse()) {
     output = output.slice(0, change.start) + change.after + output.slice(change.end);

@@ -1,0 +1,23 @@
+import { test, expect } from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
+test('curated gallery supports labelled controls, keyboard tabs, modal dismissal and responsive axe checks',async({page},testInfo)=>{
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto('/?demo=gallery');
+ await expect(page.getByRole('heading',{level:1})).toHaveText('B.A.R component gallery');
+ await page.getByRole('textbox',{name:'Record name'}).fill('Example');
+ await page.getByRole('button',{name:'Clear record name'}).click();
+ await expect(page.getByRole('textbox',{name:'Record name'})).toHaveValue('');
+ await page.getByRole('combobox',{name:'Record status'}).click();await page.getByRole('option',{name:'Ready',exact:true}).click();
+ await expect(page.getByRole('cell',{name:'ready',exact:true})).toBeVisible();
+ await page.getByRole('tab',{name:'Overview',exact:true}).focus();await page.keyboard.press('ArrowRight');await page.keyboard.press('Enter');
+ await expect(page.getByRole('tabpanel')).toHaveText('Details content');
+ const open=page.getByRole('button',{name:'Review record',exact:true});await open.click();
+ await expect(page.getByRole('dialog',{name:'Review record'})).toBeVisible();
+ await testInfo.attach('gallery-dialog',{body:await page.screenshot({fullPage:true}),contentType:'image/png'});
+ expect((await new AxeBuilder({page}).analyze()).violations).toEqual([]);
+ await page.keyboard.press('Escape');await expect(page.getByRole('dialog')).toBeHidden();await expect(open).toBeFocused();
+ await open.click();await page.getByRole('button',{name:'Close review'}).click();await expect(page.getByRole('dialog')).toBeHidden();
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ expect((await new AxeBuilder({page}).analyze()).violations).toEqual([]);expect(errors).toEqual([]);
+ await testInfo.attach('gallery-complete',{body:await page.screenshot({fullPage:true}),contentType:'image/png'});
+});

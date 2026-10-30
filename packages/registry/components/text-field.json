@@ -1,0 +1,21 @@
+{
+  "id": "text-field",
+  "status": "curated",
+  "foundation": "@mui/material/TextField",
+  "requiredChecks": [
+    "visible-label",
+    "label-association",
+    "error-association"
+  ],
+  "replacement": {
+    "requiresApproval": true,
+    "preserve": [
+      "event-handlers",
+      "controlled-state",
+      "form-semantics",
+      "aria-*",
+      "data-*"
+    ]
+  },
+  "source": "mui/material-ui"
+}

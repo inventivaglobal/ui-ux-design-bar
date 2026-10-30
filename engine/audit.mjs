@@ -1,4 +1,5 @@
 import { scanJsxImages } from './jsx-images.mjs';
+import { repairCandidates } from './jsx-elements.mjs';
 // Image checks use JSX syntax; other checks remain conservative regex heuristics.
 // This is not a substitute for a general AST or browser audit.
 export function audit(source, filename = 'input.jsx') {
@@ -20,6 +21,11 @@ export function audit(source, filename = 'input.jsx') {
       add('form.explicit-button-type','medium','Button inside a file containing a form should declare type',i,false);
     if ((name === 'button' || name === 'Button') && /\bonClick\s*=/.test(attrs) && /\bdisabled\b/.test(attrs) && /\baria-disabled/.test(attrs))
       add('interaction.disabled-redundancy','low','Review redundant disabled semantics',i,false);
+  }
+  for (const change of repairCandidates(source).changes) {
+    const existing = findings.find(f => f.ruleId === change.ruleId && f.index <= change.start && change.start - f.index < 20);
+    if (existing) existing.fixable = true;
+    else add(change.ruleId, 'medium', change.reason, change.start, true);
   }
   findings.sort((a,b) => a.index-b.index);
   return {schemaVersion:'0.1',file:filename,analysis:{imageSyntaxParsed:imageScan.parsed},findings,summary:{total:findings.length,high:findings.filter(f=>f.severity==='high').length}};

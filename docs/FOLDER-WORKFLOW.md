@@ -16,7 +16,7 @@ node engine/cli.mjs undo ./src JOURNAL_ID_FROM_APPLY --yes
 
 `audit <file>` and `repair <file>` retain their earlier interfaces. `repair` is still preview-only. Folder `preview` also performs no writes. `apply` and `undo` require the literal `--yes`; the program does not infer approval. Never apply a plan you have not reviewed.
 
-The consolidated JSON report includes relative paths, 1-based line/column, severity, evidence, `safe-opt-in` or `suggestion-only` repairability, parse/read errors and skipped symlinks. Findings remain machine-readable for an agent or future UI. Invalid JSX/TSX is explicitly reported as an analysis error rather than a clean result. Folder audit exits 0 when there are no high-severity findings/errors, 1 for high findings, and 2 for analysis/operation errors. Low/medium findings can still exist at exit 0. Preview exits 0 on successful generation even if its embedded report has unresolved findings/errors: inspect that report.
+The consolidated JSON report includes relative paths, 1-based line/column, severity, evidence, `safe-opt-in` or `suggestion-only` repairability, parse/read errors and skipped symlinks. Findings remain machine-readable for an agent or future UI. Invalid JSX/TSX is explicitly reported as an analysis error rather than a clean result. Folder audit exits 0 when there are no high-severity findings/errors, 1 for high findings, and 2 for analysis/operation errors. Low/medium findings can still exist at exit 0. Preview exits 0 on successful generation even if its embedded report has unresolved findings: inspect that report. Analysis errors or resource-limit truncation refuse preview generation (exit 2).
 
 Only the existing author-marked decorative-image transformation is applied. No new image intent or accessible labels are invented. Unknown intent and other rules remain suggestions. This stage adds a CLI/file workflow, not a folder-picker UI. The browser repair lab remains a non-writing preview.
 
@@ -37,3 +37,7 @@ A crash may leave `.bar/write.lock`. B.A.R never removes it automatically: a PID
 ## Verification
 
 `npm run check` runs the Node engine/filesystem/CLI suite, production example build and existing desktop/mobile browser suite together. Workspace tests cover traversal, symlinks/hardlinks, tampered plans, stale apply/undo, exact-byte round trips, syntax errors, write locks and explicit CLI confirmation. Browser tests verify the existing narrow repair, not arbitrary files supplied by a user. No lint/type-check pipeline or accessibility certification is claimed.
+
+## Resource ceilings
+
+Folder scans stop with `complete:false`, `truncated:true` and a `WORKSPACE_LIMIT` error at 10,000 visited entries, 1,000 source files, depth 32, 16 MiB aggregate source, 10,000 findings or 8 MiB report payload. Individual sources remain limited to 2 MiB. Preview refuses incomplete scans and plans exceeding 32 MiB; recovery journals remain limited to 64 MiB. Split large workspaces into smaller explicit roots. Limits are safeguards, not evidence that excluded or unvisited files passed.

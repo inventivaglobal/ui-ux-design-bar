@@ -1,15 +1,11 @@
-# Architecture — v0.2 draft
+# Architecture
 
-The hybrid approach consumes MUI as a dependency and layers curated design tokens, manifests, framework adapters, and QA tools on top. The six research skills are treated as attributed knowledge sources, not copied wholesale. Material Symbols are referenced by semantic aliases; assets are not bundled yet.
+`discover → retrieve → build/inspect → audit → propose → preview → approve → apply → verify → report/undo`
 
-## Planned pipeline
+MUI remains an external dependency, not a fork. `packages/components` provides nine curated wrappers and safe starter generation; `packages/registry` provides validated manifests and pinned local icon assets; `packages/tokens` adapts semantic tokens to MUI.
 
-`discover → retrieve → build/inspect → audit → match → repair → verify → report`
+`packages/qa` consolidates six upstream knowledge sources into original, deduplicated rules and executable plan/review APIs. It does not run upstream installers, copy entire engines, or convert subjective design review into automatic passes.
 
-## Verification contract
+`engine` owns JSX/TSX and CSS source analysis, guarded transformations and workspace journals. `browser-audit.mjs` audits explicit authorized routes, keeps network policy failures visible, and compares screenshots only against explicitly managed baselines. CLI and read-only stdio MCP adapt these APIs. Browser artifacts are separate from source mutation.
 
-A finding includes rule ID, target, evidence, severity, confidence, and suggested fix. Repairs must preserve business logic, require approval for risky changes, and pass relevant regression checks before being called verified.
-
-## Status
-
-These JSON files are initial schemas and example data, not a functioning component package or QA runner. Licence review, upstream version pinning, runtime implementation and tests are outstanding.
+Repairs preserve source bytes outside exact approved edits; apply verifies source hashes and the expected transformation. Per-file atomic writes do not imply an all-files transaction. The journal supports interrupted recovery. Runtime behavior is not proven by static repair; project tests and manual review remain required.

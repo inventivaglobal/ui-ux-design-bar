@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "id": "oil-ui",
+      "repository": "https://github.com/oil-oil/oil-ui",
+      "revision": "e3334bd5f6e700d21ac275b169ceee6495db9391",
+      "license": "MIT",
+      "licenseFile": "licenses/oil-ui.txt",
+      "inspectedPaths": [
+        "SKILL.md"
+      ],
+      "url": "https://github.com/oil-oil/oil-ui/blob/e3334bd5f6e700d21ac275b169ceee6495db9391/SKILL.md",
+      "integration": "original-concept-mapping",
+      "upstreamCodeExecuted": false,
+      "reviewedAt": "2026-10-30"
+    },
+    {
+      "id": "daisyui",
+      "repository": "https://github.com/saadeghi/daisyui",
+      "revision": "bf3bac3a397b543e55641ecb2d60a2ed961f09ec",
+      "license": "MIT",
+      "licenseFile": "licenses/daisyui.txt",
+      "inspectedPaths": [
+        "skills/daisyui/SKILL.md"
+      ],
+      "url": "https://github.com/saadeghi/daisyui/blob/bf3bac3a397b543e55641ecb2d60a2ed961f09ec/skills/daisyui/SKILL.md",
+      "integration": "original-concept-mapping",
+      "upstreamCodeExecuted": false,
+      "reviewedAt": "2026-10-30"
+    },
+    {
+      "id": "hallmark",
+      "repository": "https://github.com/Nutlope/hallmark",
+      "revision": "4f6a46c6dc325d40ab268c93e25c7b96676ebccd",
+      "license": "MIT",
+      "licenseFile": "licenses/hallmark.txt",
+      "inspectedPaths": [
+        "skills/hallmark/SKILL.md"
+      ],
+      "url": "https://github.com/Nutlope/hallmark/blob/4f6a46c6dc325d40ab268c93e25c7b96676ebccd/skills/hallmark/SKILL.md",
+      "integration": "original-concept-mapping",
+      "upstreamCodeExecuted": false,
+      "reviewedAt": "2026-10-30"
+    },
+    {
+      "id": "impeccable",
+      "repository": "https://github.com/pbakaus/impeccable",
+      "revision": "02523aec3e4c4580102d996d1b6a71fbe062e03f",
+      "license": "Apache-2.0",
+      "licenseFile": "licenses/impeccable.txt",
+      "inspectedPaths": [
+        "skill/reference/audit.md"
+      ],
+      "url": "https://github.com/pbakaus/impeccable/blob/02523aec3e4c4580102d996d1b6a71fbe062e03f/skill/reference/audit.md",
+      "integration": "original-concept-mapping",
+      "upstreamCodeExecuted": false,
+      "reviewedAt": "2026-10-30"
+    },
+    {
+      "id": "make-interfaces-feel-better",
+      "repository": "https://github.com/jakubkrehel/make-interfaces-feel-better",
+      "revision": "35545ea1512ad59fa463e6b1f95ca9c052981fe6",
+      "license": "MIT",
+      "licenseFile": "licenses/make-interfaces-feel-better.txt",
+      "inspectedPaths": [
+        "skills/make-interfaces-feel-better/SKILL.md"
+      ],
+      "url": "https://github.com/jakubkrehel/make-interfaces-feel-better/blob/35545ea1512ad59fa463e6b1f95ca9c052981fe6/skills/make-interfaces-feel-better/SKILL.md",
+      "integration": "original-concept-mapping",
+      "upstreamCodeExecuted": false,
+      "reviewedAt": "2026-10-30"
+    },
+    {
+      "id": "ui-ux-pro-max-skill",
+      "repository": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
+      "revision": "28b3b8dee8c976df4fa3e94aed4e092ad43fcb03",
+      "license": "MIT",
+      "licenseFile": "licenses/ui-ux-pro-max-skill.txt",
+      "inspectedPaths": [
+        "src/ui-ux-pro-max/templates/base/skill-content.md"
+      ],
+      "url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/blob/28b3b8dee8c976df4fa3e94aed4e092ad43fcb03/src/ui-ux-pro-max/templates/base/skill-content.md",
+      "integration": "original-concept-mapping",
+      "upstreamCodeExecuted": false,
+      "reviewedAt": "2026-10-30"
+    }
+  ]
+}

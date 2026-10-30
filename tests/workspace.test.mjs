@@ -137,3 +137,9 @@ test('temporary files and write lock are cleaned up on source write failure', t 
   const id = fs.readdirSync(path.join(root, '.bar'))[0].replace('.json', '');
   assert.deepEqual(undoPlan(root, id).restored, []);
 });
+
+test('preview refuses syntactically incomplete audits rather than presenting a partial clean plan', t => {
+ const root=fixture(t);fs.writeFileSync(path.join(root,'Broken.tsx'),'const = ;');
+ assert.throws(()=>previewFolder(root),/source errors/);
+ assert.equal(read(root),original);assert.equal(fs.existsSync(path.join(root,'.bar')),false);
+});
