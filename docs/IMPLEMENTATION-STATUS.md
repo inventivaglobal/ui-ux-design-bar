@@ -10,7 +10,7 @@ Not claimed: complete upstream engines/datasets imported, automatic whole-app re
 
 `npm test`: Node contracts, parsing, escaping, safety, source provenance, registry rendering, MCP SDK client handshake. `npm run test:package`: pack → fresh install → CLI and exports. `npm run check`: Node tests → generated demo production build → desktop/mobile Chromium tests. CI additionally runs package smoke. Browser tests cover the MUI form/repair/gallery and separately served non-MUI fixtures; they do not test a downstream customer application.
 
-Local Node/package/build checks have run; final counts and exact-commit browser CI evidence belong in the release acceptance record. Local Chromium launch was blocked by sandbox socket permissions before any browser assertions; do not count these cases as passes. CI must execute them before release.
+78 Node tests and 16 real desktop/mobile browser cases passed in the recorded GitHub CI run; fresh package installs passed on Node 22/24. See RELEASE-EVIDENCE.md for exact commit, artifact hash, inspected images and remaining manual limits. Local Chromium was blocked before assertions, but actual GitHub browser CI subsequently executed successfully. Final documentation/main-release commits must pass their own checks.
 
 ## Limits
 

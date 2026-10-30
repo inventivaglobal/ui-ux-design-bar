@@ -2,7 +2,7 @@
 
 **BUILD + AUDIT + REPAIR** — a standalone toolkit for AI-assisted interface work.
 
-**Release candidate in development, not signed off.** Implemented capabilities are listed below; final browser CI and release acceptance must pass before publication. No interface is certified by an empty report. [Acceptance matrix](docs/RELEASE-ACCEPTANCE.md) · [Status](docs/IMPLEMENTATION-STATUS.md)
+**Release candidate verified in standalone CI, not yet signed off.** The recorded implementation passes 78 Node tests and 16 desktop/mobile browser cases, with independent rendered/safety review; final metadata CI and versioned publication remain gated. No interface is certified by an empty report. [Evidence](docs/RELEASE-EVIDENCE.md) · [Acceptance matrix](docs/RELEASE-ACCEPTANCE.md) · [Status](docs/IMPLEMENTATION-STATUS.md)
 
 ## Build
 

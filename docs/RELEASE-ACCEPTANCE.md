@@ -1,41 +1,33 @@
 # Full standalone release acceptance
 
-Candidate: **1.0.0-rc.1**. Stable release/tag and user signoff remain pending. Downstream application work is excluded from pre-launch dependencies. This matrix defines implemented roadmap coverage, not universal automatic UI quality.
+Version: **1.0.0-rc.1**. Implementation and scoped review gates have evidence; merge/versioned publication and final user signoff are separate decisions. No downstream application is a launch dependency. [Exact evidence and limitations](RELEASE-EVIDENCE.md).
 
-| Roadmap capability | Functional evidence | Acceptance state |
+| Roadmap capability | Functional acceptance | Status |
 |---|---|---|
-| Curated component/token library | Nine manifests/wrappers, theme adapter, safe generator, evidence-bearing non-mutating replacement suggestions, SSR/escaping tests; interactive gallery | Node passed; browser CI pending |
-| Material Symbols | Six pinned SVG assets, semantic aliases, hashes and licenses | Node passed; rendered gallery pending |
-| Six integrated QA sources | 24 deduplicated operational rules, context plans, strict evidence records, skill workflow | API tests passed; scoped manual application below remains pending |
-| Source/CSS audit | JSX/TSX folder scans; parsed CSS/modules; tokens/duplicates/inline distinctions/static refs; baseline comparison | Node passed, final combined rerun required |
-| Broader safe repair pipeline | Four author-opt-in recipes; preview/apply/undo; tamper/stale/symlink/lock/partial-recovery tests | Node passed; final safety review and browser repair case required |
-| Arbitrary configured app audits | Separately hosted non-MUI fixture; HTTP/origin policy, redirect zero-arrival regression | Browser CI pending |
-| Visual/responsive/performance | PNG capture/compare/change/update tests; overflow + viewport checks; configured budget violations | Browser CI pending; not screenshot-only |
-| Agent/package interfaces | CLI, pack/install/export smoke, SDK stdio MCP/root-confinement tests | Passed locally; final CI required |
-| Publication/signoff | Exact remote commit CI, notices, release artifact/checksum, final review | Pending; npm registry not authorized/configured |
+| Curated component/token library | Nine manifests/wrappers, theme adapter, safe generator and manual replacement proposals; SSR/escaping and rendered gallery | Passed for shipped patterns |
+| Material Symbols | Six pinned local SVGs, semantic aliases, hashes, retained license and rendered icon evidence | Passed |
+| Six integrated QA sources | 24 operational deduplicated rules; context plans and evidence-bearing reviews; six-source applied manual outcomes | Passed as original curated integration, not entire upstream engines/datasets |
+| Source/CSS audit | JSX/TSX folders; parsed CSS/modules; tokens, scoped duplicates, inline distinctions, static references, baselines | Passed source tests; runtime uncertainties explicit |
+| Broader guarded repairs | Four explicit-intent recipes; preview/apply/undo; tamper/stale/symlink/lock/limit/partial recovery | Passed tests and independent safety review |
+| Configured app browser audits | Separate non-MUI fixture; axe/responsive/focus/motion; HTTP/origin/redirect policy | Passed real Chromium CI; not arbitrary business-journey certification |
+| Visual/performance checks | PNG capture/compare/change/update; incomplete baseline withholding; overflow; navigation-time thresholds | Passed; byte metric explicitly unavailable, no fabricated pass |
+| Agent/package interfaces | CLI, pack/fresh install/exports, official-SDK stdio MCP and root confinement | Passed Node 22/24 CI |
+| Publication | Exact-main-commit CI-gated tag/tarball/checksum/browser-evidence release | Staged; not yet executed |
+| User signoff | Review delivered scope, evidence, limits and published artifact | Pending user decision |
 
-## Six-source operational acceptance
+## Remaining release decision
 
-All sources have pinned official revisions and retained license texts (see QA-SOURCES). `listRules({source})` selects executable review requirements; `createAuditPlan` maps BUILD/AUDIT/REPAIR plus context; `recordReview` validates scoped observations without pretending caller evidence was verified. These are actual integrated workflows, not link collections. No entire upstream engine/search dataset is shipped.
+After final exact-commit CI, an authorized maintainer may mark PR 4 ready and merge with a deliberate `[release]` message to publish this candidate. That does not constitute a formal PR approval or user signoff. RC-to-stable promotion requires a separately reviewed version change; the candidate label is not silently removed. No npm registry account/credentials are configured.
 
-| Source | Operational rules/workflow examples | Automated contract evidence | Manual rendered review outcome |
-|---|---|---|---|
-| oil-ui | task hierarchy, authentic content, optical alignment, independent visual review | Source-specific queries and context plans | Pending gallery screenshots + product-context critique |
-| daisyUI | semantic foreground/background pairs, rendered contrast, daisyUI component/theme contract | Context filtering includes daisyui only when relevant | Framework-specific contract not applicable to MUI fixture; paired-token contrast review pending |
-| Hallmark | repeated-pattern critique, focus/motion, hierarchy and authenticity | Deduplication/provenance and advisory-only statuses | Pending independent gallery critique |
-| Impeccable | hardening/repair plan, form errors, control names, motion interruption, empty/error states | Repair-mode plans and evidence requirements | Pending rendered gallery/form states |
-| Make Interfaces Feel Better | optical alignment, wrapping, icon consistency, touch targets and interruption | Actionable rule/evidence/remediation fields | Pending mobile/desktop screenshots and interaction results |
-| UI UX Pro Max | platform fit, data encoding, contrast, loading stability and component semantics | Context-sensitive charts/forms rules | Chart-specific checks not applicable to gallery; table/control review pending |
+## Signoff checklist
 
-No pending row is a pass. Manual judgments remain advisory and require scoped rationale/evidence. Publishing requires completing applicable rows, retaining legitimate not-applicable reasons, and describing omissions precisely; it does not require testing a downstream application.
+- [x] Node tests, production build and fresh package install checks pass on recorded implementation commit.
+- [x] Real desktop/mobile browser CI passes and artifacts were downloaded, checksum-verified and visually inspected.
+- [x] Independent safety and rendered-review defects resolved with regression/evidence.
+- [x] Applicable six-source manual outcomes recorded; not-applicable framework/brand/chart scope explicit.
+- [x] Source/docs/notices/install behavior reviewed; no private downstream code/configuration included.
+- [ ] Final metadata/documentation commit CI passes.
+- [ ] Authorized merge and versioned artifact publication verified.
+- [ ] User reviews the result and gives final signoff.
 
-## Release gate checklist
-
-- [ ] All final Node, package and build checks pass on exact candidate commit.
-- [ ] Browser CI executes successfully; artifacts retained and inspected (not merely configured).
-- [ ] Independent safety review issues resolved with regressions.
-- [ ] Six-source applicable manual review outcomes recorded against actual rendered evidence.
-- [ ] README/status/notices/install instructions match shipped behavior.
-- [ ] Public branch/PR contents contain no private application code or configs.
-- [ ] Authorized merge/release actions completed with verified remote commit and versioned artifact.
-- [ ] User receives evidence and makes final signoff decision.
+Automated findings, advisory review, scoped manual acceptance, publication and user signoff are different states. Nothing here certifies all interfaces, routes, frameworks, screen readers, browsers or users.
