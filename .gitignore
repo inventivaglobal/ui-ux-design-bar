@@ -9,3 +9,5 @@ examples/mui-browser/src/repair-evidence.json
 
 .bar/
 .bar-*.tmp
+desktop-dist/
+desktop-test-results/
