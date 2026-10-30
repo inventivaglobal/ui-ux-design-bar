@@ -16,6 +16,8 @@ const executablePath=process.env.BAR_DESKTOP_EXECUTABLE;
 const application=await electron.launch({...(executablePath?{executablePath}:{}),args:[...(!executablePath?['desktop/main.mjs']:[]),'--bar-desktop-test'],env,timeout:60000});
 try {
  const page=await application.firstWindow();
+ const runtime=await application.evaluate(()=>({...process.versions}));
+ if(runtime.electron!=='45.1.0'||runtime.node!=='24.22.1')throw Error('Unexpected embedded runtime');
  await expect(page.getByRole('heading',{name:'Choose your workspace'})).toBeVisible();
  await page.getByRole('button',{name:'Choose project folder'}).click();
  await expect(page.locator('#root')).toHaveText(root);
@@ -84,6 +86,6 @@ try {
  checks.push('failed preview invalidates plan and error returns recovery journals');
  await page.screenshot({path:path.join(output,'desktop-error.png'),fullPage:true});
  checks.push('selection','source and CSS audit','JSON export','read-only preview','apply','byte-exact undo','renderer isolation','invalid IPC rejected','source error feedback');
- fs.writeFileSync(path.join(output,'gui-report.json'),JSON.stringify({passed:true,checks,projectRoot:root,fixtureFile:'Card.tsx',originalFixture:original},null,2));
+ fs.writeFileSync(path.join(output,'gui-report.json'),JSON.stringify({passed:true,checks,runtime,projectRoot:root,fixtureFile:'Card.tsx',originalFixture:original},null,2));
  console.log('Desktop GUI smoke passed: selection, audit, export, preview, apply, undo, isolation, errors.');
 }catch(error){fs.writeFileSync(path.join(output,'gui-report.json'),JSON.stringify({passed:false,checks,error:error.message,projectRoot:root},null,2));throw error;}finally{await application.close();if(process.env.BAR_TEST_KEEP_PROJECT!=='1')fs.rmSync(root,{recursive:true,force:true});}

@@ -4,7 +4,7 @@ Set-StrictMode -Version Latest
 function Find-BarRegistration([string]$hive) {
   $key = "${hive}:\Software\Microsoft\Windows\CurrentVersion\Uninstall"
   if (Test-Path $key) {
-    Get-ChildItem $key | Where-Object { (Get-ItemPropertyValue $_.PSPath -Name DisplayName -ErrorAction SilentlyContinue) -eq 'B.A.R' }
+    Get-ChildItem $key | Where-Object { $_.GetValue('DisplayName', '') -eq 'B.A.R' }
   }
 }
 if (@(Find-BarRegistration 'HKCU').Count -or @(Find-BarRegistration 'HKLM').Count) { throw 'Smoke test requires a disposable Windows account with no existing B.A.R installation' }

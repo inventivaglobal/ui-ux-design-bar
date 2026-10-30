@@ -75,6 +75,10 @@ jobs:
         with:
           name: BAR-windows-desktop-test-evidence
           path: release-desktop-evidence
+      - name: Verify Windows producer integrity and commit
+        run: |
+          (cd release-artifacts && sha256sum -c SHA256SUMS)
+          node --input-type=module -e 'import fs from "node:fs"; const p=JSON.parse(fs.readFileSync("release-artifacts/provenance.json")); const v=JSON.parse(fs.readFileSync("package.json")).version; if(p.commit!==process.env.GITHUB_SHA||p.version!==v)throw Error("Windows artifact provenance mismatch");'
       - name: Pack exact tested source and checksum
         run: |
           mkdir -p release-artifacts
