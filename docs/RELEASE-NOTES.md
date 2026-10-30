@@ -1,3 +1,23 @@
+# B.A.R 1.1.0 — Windows desktop
+
+Adds a Windows x64 per-user installer and local graphical source/CSS audit,
+JSON export, supported repair preview, confirmed apply and undo. Bundles
+Electron 45.1.0 / Node 24.22.1: no separate Node/npm installation needed.
+
+**Unsigned:** Windows may show unknown publisher/SmartScreen warnings or a
+managed-device policy may block execution. Do not disable security controls.
+No signing certificate was purchased or configured.
+
+Download `BAR-1.1.0-windows-x64-setup.exe`, run the installer, then open B.A.R
+from the Start menu and choose your project source folder. Projects and exported
+reports are preserved on uninstall. CSS remains report-only. Advanced component
+creation, browser audits and MCP workflows remain CLI features in this edition.
+
+The release includes SHA256SUMS, corresponding source, build provenance and
+Windows/browser test evidence. The previous v1.0.0 release is unchanged.
+
+---
+
 # B.A.R 1.0.0
 
 Standalone BUILD + AUDIT + REPAIR toolkit: nine curated MUI patterns, semantic tokens, local licensed Material Symbols, six-source operational QA workflows, JSX/TSX and CSS audits, guarded explicit-intent repairs, manual-review replacement proposals, configured-route browser audits, CLI/library and read-only stdio MCP.

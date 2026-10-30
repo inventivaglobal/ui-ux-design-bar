@@ -1,7 +1,6 @@
 name: B.A.R Windows desktop
 on:
-  push:
-  pull_request:
+  workflow_call:
   workflow_dispatch:
 permissions:
   contents: read

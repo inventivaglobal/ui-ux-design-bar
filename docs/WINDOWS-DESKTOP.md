@@ -67,10 +67,11 @@ the actual EXE, drives the installed GUI using Playwright's Electron integration
 and uninstalls it. It verifies current-user registration, unchanged PATH, and
 project-file preservation. The hosted runner may be elevated; this is not a claim
 of a separately provisioned standard-user acceptance test. The smoke script
-refuses an account that already has B.A.R installed. It publishes CI artifacts
-only, not a GitHub release. Test
-screenshots/results are separate artifacts. Public release publication is a
-separate owner-approved action after these checks pass.
+refuses an account that already has B.A.R installed. The reusable Windows job uploads CI artifacts. The parent CI publishes them only
+after all regression and Windows jobs pass on an explicitly release-marked main
+commit. Test
+screenshots/results are separate artifacts. Public release publication requires the owner-approved release-marked merge after
+these checks pass.
 
 The artifact contains the unsigned setup EXE, SHA256SUMS, build provenance and a
 corresponding-source ZIP of the exact commit. Build inputs are pinned and the

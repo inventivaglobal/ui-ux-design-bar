@@ -45,9 +45,11 @@ jobs:
             playwright-report/
             test-results/
           retention-days: 14
+  windows-desktop:
+    uses: ./.github/workflows/windows-desktop.yml
   release:
     name: Publish explicit GitHub release
-    needs: [engine-tests, browser-example]
+    needs: [engine-tests, browser-example, windows-desktop]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[release]')
     runs-on: ubuntu-latest
     permissions:
@@ -65,13 +67,22 @@ jobs:
         with:
           name: browser-example-report
           path: release-browser-evidence
+      - uses: actions/download-artifact@v4
+        with:
+          name: BAR-windows-x64-unsigned
+          path: release-artifacts
+      - uses: actions/download-artifact@v4
+        with:
+          name: BAR-windows-desktop-test-evidence
+          path: release-desktop-evidence
       - name: Pack exact tested source and checksum
         run: |
-          mkdir release-artifacts
+          mkdir -p release-artifacts
           npm pack --ignore-scripts --json --pack-destination release-artifacts > release-artifacts/pack.json
           (cd release-browser-evidence && zip -qr ../release-artifacts/browser-evidence.zip .)
+          (cd release-desktop-evidence && zip -qr ../release-artifacts/windows-desktop-evidence.zip .)
           cd release-artifacts
-          sha256sum *.tgz browser-evidence.zip > SHA256SUMS
+          sha256sum *.tgz *.exe *.zip provenance.json pack.json > SHA256SUMS
       - name: Publish no-overwrite versioned artifact (never npm)
         env:
           GH_TOKEN: ${{ github.token }}
@@ -95,5 +106,5 @@ jobs:
           [[ "$actual" == "commit:$GITHUB_SHA" ]] || { echo 'Tag verification failed'; exit 1; }
           options=()
           if [[ "$version" == *-* ]]; then options+=(--prerelease); fi
-          gh release create "$tag" release-artifacts/*.tgz release-artifacts/browser-evidence.zip release-artifacts/SHA256SUMS release-artifacts/pack.json \
+          gh release create "$tag" release-artifacts/*.tgz release-artifacts/*.exe release-artifacts/*.zip release-artifacts/SHA256SUMS release-artifacts/pack.json release-artifacts/provenance.json \
             --verify-tag --target "$GITHUB_SHA" --title "B.A.R $version" --notes-file docs/RELEASE-NOTES.md "${options[@]}"
