@@ -9,7 +9,7 @@ export function createBarTheme(overrides = {}) {
     shape: { borderRadius: tokens.radius.control },
     transitions: { duration: { shortest: tokens.motion.fastMs, standard: tokens.motion.normalMs } },
     components: {
-      MuiButtonBase: { styleOverrides: { root: { '&.Mui-focusVisible': { outline: `3px solid ${tokens.color.focus.ring}`, outlineOffset: 3 } } } },
+      MuiButtonBase: { styleOverrides: { root: { minWidth: 44, minHeight: 44, '&.Mui-focusVisible': { outline: `3px solid ${tokens.color.focus.ring}`, outlineOffset: 3 } } } },
       MuiCard: { styleOverrides: { root: { borderRadius: tokens.radius.card } } },
       MuiCssBaseline: { styleOverrides: { '@media (prefers-reduced-motion: reduce)': { '*, *::before, *::after': { animationDuration: '0.01ms !important', transitionDuration: '0.01ms !important' } } } },
     },

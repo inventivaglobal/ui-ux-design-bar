@@ -13,11 +13,13 @@ test('curated gallery supports labelled controls, keyboard tabs, modal dismissal
  await expect(page.getByRole('tabpanel')).toHaveText('Details content');
  const open=page.getByRole('button',{name:'Review record',exact:true});await open.click();
  await expect(page.getByRole('dialog',{name:'Review record'})).toBeVisible();
- await testInfo.attach('gallery-dialog',{body:await page.screenshot({fullPage:true}),contentType:'image/png'});
+ await expect(page.locator('.MuiDialog-container')).toHaveCSS('opacity','1');
+ await testInfo.attach('gallery-dialog',{body:await page.screenshot({fullPage:true,animations:'disabled'}),contentType:'image/png'});
  expect((await new AxeBuilder({page}).analyze()).violations).toEqual([]);
  await page.keyboard.press('Escape');await expect(page.getByRole('dialog')).toBeHidden();await expect(open).toBeFocused();
  await open.click();await page.getByRole('button',{name:'Close review'}).click();await expect(page.getByRole('dialog')).toBeHidden();
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
  expect((await new AxeBuilder({page}).analyze()).violations).toEqual([]);expect(errors).toEqual([]);
- await testInfo.attach('gallery-complete',{body:await page.screenshot({fullPage:true}),contentType:'image/png'});
+ for(const button of await page.getByRole('button').all()){ const box=await button.boundingBox();expect(box.height).toBeGreaterThanOrEqual(44);expect(box.width).toBeGreaterThanOrEqual(44); }
+ await testInfo.attach('gallery-complete',{body:await page.screenshot({fullPage:true,animations:'disabled'}),contentType:'image/png'});
 });
