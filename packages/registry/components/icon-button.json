@@ -1,0 +1,22 @@
+{
+  "id": "icon-button",
+  "status": "curated",
+  "foundation": "@mui/material/IconButton",
+  "requiredChecks": [
+    "accessible-name",
+    "decorative-icon",
+    "keyboard-activation",
+    "focus-visible"
+  ],
+  "replacement": {
+    "requiresApproval": true,
+    "preserve": [
+      "event-handlers",
+      "controlled-state",
+      "form-semantics",
+      "aria-*",
+      "data-*"
+    ]
+  },
+  "source": "mui/material-ui"
+}

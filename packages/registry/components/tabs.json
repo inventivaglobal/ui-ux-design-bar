@@ -1,0 +1,20 @@
+{
+  "id": "tabs",
+  "status": "curated",
+  "foundation": "@mui/material/Tabs",
+  "requiredChecks": [
+    "tab-panel-association",
+    "keyboard-navigation"
+  ],
+  "replacement": {
+    "requiresApproval": true,
+    "preserve": [
+      "event-handlers",
+      "controlled-state",
+      "form-semantics",
+      "aria-*",
+      "data-*"
+    ]
+  },
+  "source": "mui/material-ui"
+}

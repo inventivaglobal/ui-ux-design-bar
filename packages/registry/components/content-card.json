@@ -1,0 +1,19 @@
+{
+  "id": "content-card",
+  "status": "curated",
+  "foundation": "@mui/material/Card",
+  "requiredChecks": [
+    "heading-structure"
+  ],
+  "replacement": {
+    "requiresApproval": true,
+    "preserve": [
+      "event-handlers",
+      "controlled-state",
+      "form-semantics",
+      "aria-*",
+      "data-*"
+    ]
+  },
+  "source": "mui/material-ui"
+}

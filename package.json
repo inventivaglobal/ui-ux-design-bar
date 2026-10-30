@@ -1,10 +1,10 @@
 {
   "name": "ui-ux-design-bar",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "engines": {
-    "node": ">=22.12"
+    "node": "^22.18.0 || >=24.11.0"
   },
   "scripts": {
     "test": "node --test tests/*.test.mjs",
@@ -13,19 +13,50 @@
     "build:example": "npm run generate:example && vite build examples/mui-browser",
     "preview:example": "vite preview examples/mui-browser --host 127.0.0.1 --port 4173 --strictPort",
     "test:browser": "playwright test",
-    "check": "npm test && npm run build:example && npm run test:browser"
+    "check": "npm test && npm run build:example && npm run test:browser",
+    "test:package": "node scripts/package-smoke.mjs"
   },
   "dependencies": {
     "@babel/parser": "7.29.0",
+    "@babel/traverse": "8.0.7",
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.1",
+    "@modelcontextprotocol/sdk": "1.32.2",
     "@mui/material": "9.5.0",
+    "postcss": "8.5.32",
+    "postcss-selector-parser": "7.1.7",
+    "postcss-value-parser": "4.2.0",
     "react": "19.3.1",
-    "react-dom": "19.3.1"
+    "react-dom": "19.3.1",
+    "@playwright/test": "1.64.1",
+    "@axe-core/playwright": "4.14.0"
   },
   "devDependencies": {
-    "@axe-core/playwright": "4.14.0",
-    "@playwright/test": "1.64.1",
     "vite": "8.3.5"
+  },
+  "description": "Build, audit and safely repair MUI interfaces with provenance-backed QA",
+  "license": "GPL-3.0-only",
+  "bin": {
+    "bar": "engine/cli.mjs",
+    "bar-mcp": "engine/mcp.mjs"
+  },
+  "files": [
+    "engine/",
+    "packages/",
+    "agent-skills/",
+    "docs/",
+    "README.md",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md"
+  ],
+  "exports": {
+    ".": "./engine/index.mjs",
+    "./components": "./packages/components/index.mjs",
+    "./registry": "./packages/registry/index.mjs",
+    "./tokens": "./packages/tokens/mui-theme.mjs",
+    "./qa": "./packages/qa/index.mjs",
+    "./browser": "./engine/browser-audit.mjs",
+    "./generate": "./packages/components/generate.mjs",
+    "./suggest": "./packages/registry/suggest.mjs"
   }
 }

@@ -1,62 +1,565 @@
 {
-  "version": "0.1.0",
-  "status": "draft",
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "status": "integrated-concept-catalog",
   "rules": [
     {
-      "id": "a11y.icon-button-name",
-      "category": "accessibility",
+      "id": "design.task-hierarchy",
+      "category": "hierarchy",
+      "kind": "heuristic",
+      "severity": "medium",
+      "sources": [
+        "oil-ui",
+        "hallmark",
+        "impeccable"
+      ],
+      "contexts": [
+        "all"
+      ],
+      "modes": [
+        "build",
+        "audit",
+        "repair"
+      ],
+      "check": "Identify the intended user task and compare the visual emphasis of competing actions.",
+      "evidence": "Capture the initial viewport and annotate the primary action and competing elements.",
+      "remediation": "Reduce competing emphasis while retaining necessary secondary actions.",
+      "execution": "review-required",
+      "automaticRepair": false
+    },
+    {
+      "id": "design.brand-fit",
+      "category": "identity",
+      "kind": "heuristic",
+      "severity": "medium",
+      "sources": [
+        "oil-ui",
+        "hallmark",
+        "ui-ux-pro-max-skill"
+      ],
+      "contexts": [
+        "all"
+      ],
+      "modes": [
+        "build",
+        "audit",
+        "repair"
+      ],
+      "check": "Compare the proposed typography, imagery and composition with confirmed brand and audience constraints.",
+      "evidence": "Record the brief, asset provenance and a rendered example.",
+      "remediation": "Prefer established brand choices; document any deliberate deviation rather than replacing the whole style.",
+      "execution": "review-required",
+      "automaticRepair": false
+    },
+    {
+      "id": "design.authentic-content",
+      "category": "content",
+      "kind": "heuristic",
       "severity": "high",
-      "kind": "deterministic",
-      "check": "Icon-only buttons must have an accessible name",
-      "source": "internal"
+      "sources": [
+        "hallmark",
+        "oil-ui"
+      ],
+      "contexts": [
+        "all"
+      ],
+      "modes": [
+        "build",
+        "audit",
+        "repair"
+      ],
+      "check": "Check whether numerical claims, quotes, logos and illustrative assets have supplied provenance.",
+      "evidence": "List each claim and its supplied source, or mark it as unverified.",
+      "remediation": "Remove invented proof or visibly label placeholder content; do not manufacture replacements.",
+      "execution": "review-required",
+      "automaticRepair": false
+    },
+    {
+      "id": "design.repeated-patterns",
+      "category": "anti-patterns",
+      "kind": "heuristic",
+      "severity": "low",
+      "sources": [
+        "hallmark",
+        "impeccable"
+      ],
+      "contexts": [
+        "all"
+      ],
+      "modes": [
+        "build",
+        "audit",
+        "repair"
+      ],
+      "check": "Review repetitive card nesting and decorative treatments for a useful relationship to the product.",
+      "evidence": "Annotate repeated patterns in a screenshot and explain the distraction or benefit.",
+      "remediation": "Simplify only patterns that obscure the user task; retain justified brand choices.",
+      "execution": "review-required",
+      "automaticRepair": false
+    },
+    {
+      "id": "design.optical-alignment",
+      "category": "polish",
+      "kind": "heuristic",
+      "severity": "low",
+      "sources": [
+        "make-interfaces-feel-better",
+        "oil-ui"
+      ],
+      "contexts": [
+        "all"
+      ],
+      "modes": [
+        "build",
+        "audit",
+        "repair"
+      ],
+      "check": "Inspect apparent alignment of icons, labels and neighboring controls at actual display size.",
+      "evidence": "Capture the affected controls at their target scale, including adjacent elements.",
+      "remediation": "Adjust local spacing or icon placement without changing hit areas or layout semantics.",
+      "execution": "review-required",
+      "automaticRepair": false
+    },
+    {
+      "id": "design.text-wrapping",
+      "category": "typography",
+      "kind": "heuristic",
+      "severity": "low",
+      "sources": [
+        "make-interfaces-feel-better",
+        "ui-ux-pro-max-skill"
+      ],
+      "contexts": [
+        "all"
+      ],
+      "modes": [
+        "build",
+        "audit",
+        "repair"
+      ],
+      "check": "Inspect headings and compact labels with long localized text and narrow containers.",
+      "evidence": "Record screenshots of normal and long text at narrow and wide widths.",
+      "remediation": "Choose wrapping or truncation deliberately; preserve access to the complete meaning.",
+      "execution": "review-required",
+      "automaticRepair": false
+    },
+    {
+      "id": "design.icon-consistency",
+      "category": "icons",
+      "kind": "heuristic",
+      "severity": "low",
+      "sources": [
+        "make-interfaces-feel-better",
+        "ui-ux-pro-max-skill"
+      ],
+      "contexts": [
+        "all"
+      ],
+      "modes": [
+        "build",
+        "audit",
+        "repair"
+      ],
+      "check": "Compare icon family, weight and state treatment across one interface surface.",
+      "evidence": "List icon sources and show default, active and disabled examples.",
+      "remediation": "Reuse the installed family and consistent visual weight; retain accessible names.",
+      "execution": "review-required",
+      "automaticRepair": false
     },
     {
       "id": "a11y.focus-visible",
       "category": "accessibility",
-      "severity": "high",
       "kind": "browser",
-      "check": "Interactive controls expose visible keyboard focus",
-      "source": "internal"
+      "severity": "high",
+      "sources": [
+        "hallmark",
+        "impeccable",
+        "ui-ux-pro-max-skill"
+      ],
+      "contexts": [
+        "all"
+      ],
+      "modes": [
+        "build",
+        "audit",
+        "repair"
+      ],
+      "check": "Traverse the complete scoped flow with the keyboard and inspect focus visibility and order.",
+      "evidence": "Record keyboard steps, focused selectors, viewport and screenshots; include overlays.",
+      "remediation": "Restore visible focus and logical navigation without suppressing outline globally.",
+      "execution": "browser-evidence-required",
+      "automaticRepair": false
+    },
+    {
+      "id": "a11y.reduced-motion",
+      "category": "accessibility",
+      "kind": "browser",
+      "severity": "high",
+      "sources": [
+        "hallmark",
+        "impeccable",
+        "make-interfaces-feel-better"
+      ],
+      "contexts": [
+        "all"
+      ],
+      "modes": [
+        "build",
+        "audit",
+        "repair"
+      ],
+      "check": "Exercise animated state changes with reduced motion enabled and disabled.",
+      "evidence": "Record media preference, interaction steps and whether state changes remain understandable.",
+      "remediation": "Provide a restrained alternative that preserves necessary feedback and does not hide content.",
+      "execution": "browser-evidence-required",
+      "automaticRepair": false
+    },
+    {
+      "id": "a11y.control-name",
+      "category": "accessibility",
+      "kind": "browser",
+      "severity": "high",
+      "sources": [
+        "impeccable",
+        "ui-ux-pro-max-skill"
+      ],
+      "contexts": [
+        "all"
+      ],
+      "modes": [
+        "build",
+        "audit",
+        "repair"
+      ],
+      "check": "Inspect computed accessible names and roles for controls, including icon-only buttons.",
+      "evidence": "Record role/name output and the affected selector in each relevant state.",
+      "remediation": "Use meaningful visible labels or explicit accessible names; do not guess action semantics.",
+      "execution": "browser-evidence-required",
+      "automaticRepair": false
+    },
+    {
+      "id": "a11y.touch-targets",
+      "category": "accessibility",
+      "kind": "browser",
+      "severity": "medium",
+      "sources": [
+        "make-interfaces-feel-better",
+        "impeccable",
+        "ui-ux-pro-max-skill"
+      ],
+      "contexts": [
+        "all"
+      ],
+      "modes": [
+        "build",
+        "audit",
+        "repair"
+      ],
+      "check": "Measure controls and spacing against the project touch-target policy and verify neighboring hit regions.",
+      "evidence": "Record CSS-pixel bounds, spacing, device context and the policy being evaluated.",
+      "remediation": "Enlarge or space hit regions without overlapping adjacent controls. Do not equate a preferred 44px target with universal conformance.",
+      "execution": "browser-evidence-required",
+      "automaticRepair": false
+    },
+    {
+      "id": "a11y.form-errors",
+      "category": "accessibility",
+      "kind": "browser",
+      "severity": "high",
+      "sources": [
+        "impeccable",
+        "ui-ux-pro-max-skill"
+      ],
+      "contexts": [
+        "forms"
+      ],
+      "modes": [
+        "build",
+        "audit",
+        "repair"
+      ],
+      "check": "Submit invalid and corrected input and inspect label association, error announcement and retained values.",
+      "evidence": "Record steps, accessible descriptions and focus after failure and recovery.",
+      "remediation": "Connect errors to inputs, keep entered data and provide a discoverable recovery path.",
+      "execution": "browser-evidence-required",
+      "automaticRepair": false
     },
     {
       "id": "layout.responsive-overflow",
       "category": "responsive",
-      "severity": "high",
       "kind": "browser",
-      "check": "No unintended horizontal overflow at tested viewports",
-      "source": "internal"
+      "severity": "high",
+      "sources": [
+        "oil-ui",
+        "hallmark",
+        "impeccable"
+      ],
+      "contexts": [
+        "all"
+      ],
+      "modes": [
+        "build",
+        "audit",
+        "repair"
+      ],
+      "check": "Inspect page and component overflow at scoped viewports, text zoom and long-content states.",
+      "evidence": "Record viewport, zoom, scroll widths and affected elements; distinguish intentional scrolling.",
+      "remediation": "Fix the constrained element or wrapping; do not hide page overflow to mask inaccessible content.",
+      "execution": "browser-evidence-required",
+      "automaticRepair": false
     },
     {
-      "id": "visual.icon-consistency",
-      "category": "icons",
+      "id": "theme.semantic-pairs",
+      "category": "theming",
+      "kind": "heuristic",
       "severity": "medium",
-      "kind": "heuristic",
-      "check": "Icons use coherent family, size, and weight",
-      "source": "google/material-design-icons"
+      "sources": [
+        "daisyui",
+        "impeccable"
+      ],
+      "contexts": [
+        "all"
+      ],
+      "modes": [
+        "build",
+        "audit",
+        "repair"
+      ],
+      "check": "Review foreground and background token pairings across each supported theme.",
+      "evidence": "Record resolved color pairs, theme names and any intentional fixed-color assets.",
+      "remediation": "Use semantic surface/content pairs where appropriate, then measure actual rendered contrast.",
+      "execution": "review-required",
+      "automaticRepair": false
     },
     {
-      "id": "visual.generic-patterns",
-      "category": "anti-patterns",
-      "severity": "low",
-      "kind": "heuristic",
-      "check": "Flag repeated generic design patterns for contextual review",
-      "source": "Nutlope/hallmark"
+      "id": "theme.rendered-contrast",
+      "category": "theming",
+      "kind": "browser",
+      "severity": "high",
+      "sources": [
+        "daisyui",
+        "impeccable",
+        "ui-ux-pro-max-skill"
+      ],
+      "contexts": [
+        "all"
+      ],
+      "modes": [
+        "build",
+        "audit",
+        "repair"
+      ],
+      "check": "Measure text and interactive-state contrast in supported themes using the applicable project standard.",
+      "evidence": "Record measured colors, ratios, text size/weight, theme and applicable criterion.",
+      "remediation": "Adjust a shared token where feasible and recheck every affected theme and state.",
+      "execution": "browser-evidence-required",
+      "automaticRepair": false
     },
     {
-      "id": "visual.optical-alignment",
-      "category": "polish",
-      "severity": "low",
-      "kind": "heuristic",
-      "check": "Inspect icon and control optical alignment",
-      "source": "jakubkrehel/make-interfaces-feel-better"
-    },
-    {
-      "id": "component.mui-usage",
+      "id": "daisyui.component-contract",
       "category": "implementation",
+      "kind": "heuristic",
       "severity": "medium",
-      "kind": "static",
-      "check": "Validate component props against the installed MUI version",
-      "source": "mui/material-ui"
+      "sources": [
+        "daisyui"
+      ],
+      "contexts": [
+        "daisyui"
+      ],
+      "modes": [
+        "build",
+        "audit",
+        "repair"
+      ],
+      "check": "Compare component classes and required structure against the installed daisyUI version, configuration and prefix.",
+      "evidence": "Record package version, selected component reference and source location.",
+      "remediation": "Use documented class composition for that version; do not introduce daisyUI into unrelated stacks.",
+      "execution": "review-required",
+      "automaticRepair": false
+    },
+    {
+      "id": "daisyui.theme-scope",
+      "category": "theming",
+      "kind": "browser",
+      "severity": "medium",
+      "sources": [
+        "daisyui"
+      ],
+      "contexts": [
+        "daisyui"
+      ],
+      "modes": [
+        "build",
+        "audit",
+        "repair"
+      ],
+      "check": "Switch configured themes and inspect nested theme boundaries and foreground inheritance.",
+      "evidence": "Record theme configuration, nested selectors and screenshots in each supported theme.",
+      "remediation": "Correct scope or semantic tokens without forcing unrelated components into a global theme.",
+      "execution": "browser-evidence-required",
+      "automaticRepair": false
+    },
+    {
+      "id": "motion.interruption",
+      "category": "interaction",
+      "kind": "browser",
+      "severity": "medium",
+      "sources": [
+        "make-interfaces-feel-better",
+        "impeccable"
+      ],
+      "contexts": [
+        "all"
+      ],
+      "modes": [
+        "build",
+        "audit",
+        "repair"
+      ],
+      "check": "Rapidly repeat, reverse and cancel animated interactions and inspect the final state.",
+      "evidence": "Record the repeated input sequence and final visual and semantic control states.",
+      "remediation": "Make transitions interruptible and ensure cancellation clears transient state.",
+      "execution": "browser-evidence-required",
+      "automaticRepair": false
+    },
+    {
+      "id": "motion.property-cost",
+      "category": "performance",
+      "kind": "heuristic",
+      "severity": "medium",
+      "sources": [
+        "hallmark",
+        "impeccable",
+        "make-interfaces-feel-better"
+      ],
+      "contexts": [
+        "all"
+      ],
+      "modes": [
+        "build",
+        "audit",
+        "repair"
+      ],
+      "check": "Review broad transitions, layout-changing animation and persistent optimization hints for a measured need.",
+      "evidence": "Record source declarations and, where available, a trace showing actual frame or layout cost.",
+      "remediation": "Narrow animated properties and remove unsupported optimization hints; profile before claiming a speedup.",
+      "execution": "review-required",
+      "automaticRepair": false
+    },
+    {
+      "id": "performance.loading-stability",
+      "category": "performance",
+      "kind": "browser",
+      "severity": "medium",
+      "sources": [
+        "impeccable",
+        "ui-ux-pro-max-skill"
+      ],
+      "contexts": [
+        "all"
+      ],
+      "modes": [
+        "build",
+        "audit",
+        "repair"
+      ],
+      "check": "Observe initial loading and late asset arrival under the explicitly chosen test conditions.",
+      "evidence": "Record browser, cache state, network/CPU settings, asset timing and layout-shift observations.",
+      "remediation": "Reserve asset space and optimize the measured bottleneck; avoid lazy-loading the critical initial image blindly.",
+      "execution": "browser-evidence-required",
+      "automaticRepair": false
+    },
+    {
+      "id": "design.data-encoding",
+      "category": "visualization",
+      "kind": "heuristic",
+      "severity": "medium",
+      "sources": [
+        "ui-ux-pro-max-skill"
+      ],
+      "contexts": [
+        "charts"
+      ],
+      "modes": [
+        "build",
+        "audit",
+        "repair"
+      ],
+      "check": "Check whether chart encoding fits the comparison task and remains understandable without color alone.",
+      "evidence": "Record the analytical question, chart data, legend and nonvisual alternative.",
+      "remediation": "Choose an encoding matching the data relationship and preserve labels or a table alternative.",
+      "execution": "review-required",
+      "automaticRepair": false
+    },
+    {
+      "id": "design.platform-fit",
+      "category": "usability",
+      "kind": "heuristic",
+      "severity": "medium",
+      "sources": [
+        "ui-ux-pro-max-skill",
+        "oil-ui"
+      ],
+      "contexts": [
+        "all"
+      ],
+      "modes": [
+        "build",
+        "audit",
+        "repair"
+      ],
+      "check": "Compare interaction conventions with the detected platform and actual input devices.",
+      "evidence": "Record platform, framework, inputs and a representative task walkthrough.",
+      "remediation": "Apply platform-appropriate conventions instead of transplanting native-only behavior to web.",
+      "execution": "review-required",
+      "automaticRepair": false
+    },
+    {
+      "id": "design.empty-error-loading",
+      "category": "usability",
+      "kind": "heuristic",
+      "severity": "high",
+      "sources": [
+        "oil-ui",
+        "impeccable",
+        "ui-ux-pro-max-skill"
+      ],
+      "contexts": [
+        "all"
+      ],
+      "modes": [
+        "build",
+        "audit",
+        "repair"
+      ],
+      "check": "Review empty, pending, failure and successful states for a clear next action.",
+      "evidence": "Capture each state with its trigger and intended recovery behavior.",
+      "remediation": "Add truthful feedback and actionable recovery while preserving user input and business rules.",
+      "execution": "review-required",
+      "automaticRepair": false
+    },
+    {
+      "id": "design.independent-visual-review",
+      "category": "verification",
+      "kind": "heuristic",
+      "severity": "medium",
+      "sources": [
+        "oil-ui",
+        "impeccable"
+      ],
+      "contexts": [
+        "all"
+      ],
+      "modes": [
+        "build",
+        "audit",
+        "repair"
+      ],
+      "check": "Review actual rendered output separately from source-code correctness and task completion.",
+      "evidence": "Record screenshot paths, viewport, reviewer and unresolved visual observations.",
+      "remediation": "Resolve justified findings and repeat the affected render; never claim visual review from code alone.",
+      "execution": "review-required",
+      "automaticRepair": false
     }
   ]
 }

@@ -8,6 +8,7 @@ import {
 import tokens from '../../../packages/tokens/tokens.json';
 import GeneratedButton from './GeneratedButton';
 import RepairDemo from './RepairDemo';
+import Gallery from './Gallery';
 
 const theme = createTheme({
   palette: {
@@ -19,7 +20,7 @@ const theme = createTheme({
   shape: { borderRadius: tokens.radius.control },
   typography: { fontFamily: 'Inter, system-ui, sans-serif' },
   components: {
-    MuiButton: { styleOverrides: { root: {
+    MuiButton: { defaultProps: { disableRipple: true }, styleOverrides: { root: {
       minHeight: 44, textTransform: 'none', fontWeight: 600,
       '&.Mui-focusVisible': { outline: `3px solid ${tokens.color.focus.ring}`, outlineOffset: 3 },
     } } },
@@ -116,4 +117,4 @@ function App() {
   );
 }
 
-createRoot(document.getElementById('root')).render(<React.StrictMode><ThemeProvider theme={theme}><CssBaseline />{new URLSearchParams(window.location.search).get('demo') === 'repair' ? <RepairDemo /> : <App />}</ThemeProvider></React.StrictMode>);
+createRoot(document.getElementById('root')).render(<React.StrictMode><ThemeProvider theme={theme}><CssBaseline />{new URLSearchParams(window.location.search).get('demo') === 'repair' ? <RepairDemo /> : new URLSearchParams(window.location.search).get('demo') === 'gallery' ? <Gallery /> : <App />}</ThemeProvider></React.StrictMode>);

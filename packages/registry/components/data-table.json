@@ -1,0 +1,20 @@
+{
+  "id": "data-table",
+  "status": "curated",
+  "foundation": "@mui/material/Table",
+  "requiredChecks": [
+    "caption",
+    "column-headers"
+  ],
+  "replacement": {
+    "requiresApproval": true,
+    "preserve": [
+      "event-handlers",
+      "controlled-state",
+      "form-semantics",
+      "aria-*",
+      "data-*"
+    ]
+  },
+  "source": "mui/material-ui"
+}
