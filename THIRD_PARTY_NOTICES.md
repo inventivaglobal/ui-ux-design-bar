@@ -4,6 +4,7 @@ B.A.R code is GPL-3.0-only (LICENSE). Runtime dependencies are consumed as npm p
 
 - React, Emotion, MUI, Babel, PostCSS, selector/value parsers and the MCP SDK retain their upstream package licenses.
 - Playwright and axe-core tooling retain their upstream package licenses; browser binaries are separately installed for tests.
+- The Windows desktop bundle uses Electron (MIT) and its included Chromium/Node.js third-party components. Retain `LICENSE.electron.txt` and `LICENSES.chromium.html` shipped beside the application. electron-builder (MIT) and NSIS are build/installer tooling; NSIS license information is available at https://nsis.sourceforge.io/License. Dependency licenses remain in the packaged application archive. The exact corresponding B.A.R source is provided with the installer artifact.
 - Six Google Material Symbols SVG assets are bundled under Apache-2.0 with pinned commit, individual hashes, upstream LICENSE and NOTICE under `packages/registry/icons/`. They do not imply Google endorsement.
 - Six design-QA source snapshots and pinned commit references are listed in `packages/qa/sources.json` and `docs/QA-SOURCES.md`; original license texts are preserved under `packages/qa/licenses/`. B.A.R rules are original curated concept mappings, not complete upstream code/skill/dataset imports.
 

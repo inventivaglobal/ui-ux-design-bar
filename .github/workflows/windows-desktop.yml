@@ -1,0 +1,53 @@
+name: B.A.R Windows desktop
+on:
+  workflow_call:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  installer:
+    runs-on: windows-2025
+    timeout-minutes: 25
+    env:
+      CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+      PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.22.1'
+          cache: npm
+      - run: npm ci
+      - name: Engine and desktop policy tests
+        run: node --test tests/engine.test.mjs tests/css-audit.test.mjs tests/repair-recipes.test.mjs tests/desktop-unit*.test.mjs
+      - name: Build pinned per-user installer (no publishing)
+        run: npm run dist:windows
+      - name: Install, exercise actual packaged GUI and uninstall
+        shell: pwsh
+        run: ./scripts/windows-installer-smoke.ps1
+      - name: Record provenance, corresponding source and checksums
+        shell: pwsh
+        run: |
+          git archive --format=zip --output=desktop-dist/BAR-corresponding-source.zip HEAD
+          $version = (Get-Content package.json | ConvertFrom-Json).version
+          @{ version=$version; commit=$env:GITHUB_SHA; run=$env:GITHUB_RUN_ID; architecture='x64'; os='Windows'; signing='unsigned'; electron='45.1.0'; embeddedNode='24.22.1'; verification='installed GUI smoke + uninstall'; reproducibility='locked dependencies; timestamps mean bytes may differ between builds' } | ConvertTo-Json | Set-Content desktop-dist/provenance.json
+          Get-ChildItem desktop-dist -File | Where-Object { $_.Extension -in '.exe','.zip','.json' } | Sort-Object Name | ForEach-Object { (Get-FileHash $_.FullName -Algorithm SHA256).Hash.ToLower() + '  ' + $_.Name } | Set-Content -Encoding ascii desktop-dist/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        with:
+          name: BAR-windows-x64-unsigned
+          path: |
+            desktop-dist/*-setup.exe
+            desktop-dist/SHA256SUMS
+            desktop-dist/provenance.json
+            desktop-dist/BAR-corresponding-source.zip
+          if-no-files-found: error
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: BAR-windows-desktop-test-evidence
+          path: desktop-test-results/
+          if-no-files-found: warn
+          retention-days: 30

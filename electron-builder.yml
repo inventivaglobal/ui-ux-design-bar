@@ -1,0 +1,36 @@
+appId: global.inventiva.bar
+productName: B.A.R
+artifactName: BAR-${version}-windows-${arch}-setup.${ext}
+directories:
+  output: desktop-dist
+asar: true
+npmRebuild: false
+files:
+  - desktop/**
+  - '!desktop/gui-smoke.mjs'
+  - engine/**
+  - packages/**
+  - agent-skills/**
+  - docs/**
+  - package.json
+  - LICENSE
+  - THIRD_PARTY_NOTICES.md
+  - README.md
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+  executableName: BAR
+  requestedExecutionLevel: asInvoker
+nsis:
+  oneClick: true
+  perMachine: false
+  allowElevation: false
+  createDesktopShortcut: false
+  createStartMenuShortcut: true
+  shortcutName: B.A.R
+  uninstallDisplayName: B.A.R
+  runAfterFinish: true
+  deleteAppDataOnUninstall: false
+  packElevateHelper: false
+  license: LICENSE

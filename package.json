@@ -1,6 +1,6 @@
 {
   "name": "ui-ux-design-bar",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "type": "module",
   "engines": {
@@ -14,24 +14,29 @@
     "preview:example": "vite preview examples/mui-browser --host 127.0.0.1 --port 4173 --strictPort",
     "test:browser": "playwright test",
     "check": "npm test && npm run build:example && npm run test:browser",
-    "test:package": "node scripts/package-smoke.mjs"
+    "test:package": "node scripts/package-smoke.mjs",
+    "dev:desktop": "electron .",
+    "dist:windows": "electron-builder --config electron-builder.yml --win nsis --x64 --publish never",
+    "test:desktop": "node desktop/gui-smoke.mjs"
   },
   "dependencies": {
+    "@axe-core/playwright": "4.14.0",
     "@babel/parser": "7.29.0",
     "@babel/traverse": "8.0.7",
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.1",
     "@modelcontextprotocol/sdk": "1.32.2",
     "@mui/material": "9.5.0",
+    "@playwright/test": "1.64.1",
     "postcss": "8.5.32",
     "postcss-selector-parser": "7.1.7",
     "postcss-value-parser": "4.2.0",
     "react": "19.3.1",
-    "react-dom": "19.3.1",
-    "@playwright/test": "1.64.1",
-    "@axe-core/playwright": "4.14.0"
+    "react-dom": "19.3.1"
   },
   "devDependencies": {
+    "electron": "45.1.0",
+    "electron-builder": "26.18.0",
     "vite": "8.3.5"
   },
   "description": "Build, audit and safely repair MUI interfaces with provenance-backed QA",
@@ -47,7 +52,8 @@
     "docs/",
     "README.md",
     "LICENSE",
-    "THIRD_PARTY_NOTICES.md"
+    "THIRD_PARTY_NOTICES.md",
+    "desktop/"
   ],
   "exports": {
     ".": "./engine/index.mjs",
@@ -58,5 +64,8 @@
     "./browser": "./engine/browser-audit.mjs",
     "./generate": "./packages/components/generate.mjs",
     "./suggest": "./packages/registry/suggest.mjs"
-  }
+  },
+  "main": "desktop/main.mjs",
+  "author": "Inventiva Global",
+  "homepage": "https://github.com/inventivaglobal/ui-ux-design-bar"
 }

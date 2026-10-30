@@ -4,6 +4,14 @@
 
 **B.A.R 1.0.0 — stable release approved and signed off by the project owner.** The recorded implementation passes 78 Node tests and 16 desktop/mobile browser cases, with independent rendered/safety review; versioned publication remains gated on exact final-commit CI. No interface is certified by an empty report. [Evidence](docs/RELEASE-EVIDENCE.md) · [Acceptance matrix](docs/RELEASE-ACCEPTANCE.md) · [Status](docs/IMPLEMENTATION-STATUS.md)
 
+## Windows desktop (1.1.0)
+
+A local graphical interface for choosing a project, source/CSS audits, JSON
+report export, supported repair previews, confirmed apply and undo. The Windows
+x64 per-user installer bundles its runtime: no separate Node/npm setup. It does
+not expose every advanced CLI workflow. The desktop installer is unsigned and is
+not the previously signed-off 1.0.0 release. [Install, safety and build guide](docs/WINDOWS-DESKTOP.md)
+
 ## Build
 
 Nine curated React/MUI patterns, semantic tokens/theme adapter, six locally bundled Material Symbols, validated component manifests and safe JSX starter generation. Components preserve explicit application callbacks rather than inventing business logic. [Library](docs/COMPONENT-LIBRARY.md)

@@ -4,6 +4,8 @@ on:
   pull_request:
 permissions:
   contents: read
+env:
+  ELECTRON_SKIP_BINARY_DOWNLOAD: '1'
 jobs:
   engine-tests:
     runs-on: ubuntu-latest
@@ -43,9 +45,11 @@ jobs:
             playwright-report/
             test-results/
           retention-days: 14
+  windows-desktop:
+    uses: ./.github/workflows/windows-desktop.yml
   release:
     name: Publish explicit GitHub release
-    needs: [engine-tests, browser-example]
+    needs: [engine-tests, browser-example, windows-desktop]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[release]')
     runs-on: ubuntu-latest
     permissions:
@@ -63,13 +67,26 @@ jobs:
         with:
           name: browser-example-report
           path: release-browser-evidence
+      - uses: actions/download-artifact@v4
+        with:
+          name: BAR-windows-x64-unsigned
+          path: release-artifacts
+      - uses: actions/download-artifact@v4
+        with:
+          name: BAR-windows-desktop-test-evidence
+          path: release-desktop-evidence
+      - name: Verify Windows producer integrity and commit
+        run: |
+          (cd release-artifacts && sha256sum -c SHA256SUMS)
+          node --input-type=module -e 'import fs from "node:fs"; const p=JSON.parse(fs.readFileSync("release-artifacts/provenance.json")); const v=JSON.parse(fs.readFileSync("package.json")).version; if(p.commit!==process.env.GITHUB_SHA||p.version!==v)throw Error("Windows artifact provenance mismatch");'
       - name: Pack exact tested source and checksum
         run: |
-          mkdir release-artifacts
+          mkdir -p release-artifacts
           npm pack --ignore-scripts --json --pack-destination release-artifacts > release-artifacts/pack.json
           (cd release-browser-evidence && zip -qr ../release-artifacts/browser-evidence.zip .)
+          (cd release-desktop-evidence && zip -qr ../release-artifacts/windows-desktop-evidence.zip .)
           cd release-artifacts
-          sha256sum *.tgz browser-evidence.zip > SHA256SUMS
+          sha256sum *.tgz *.exe *.zip provenance.json pack.json > SHA256SUMS
       - name: Publish no-overwrite versioned artifact (never npm)
         env:
           GH_TOKEN: ${{ github.token }}
@@ -93,5 +110,46 @@ jobs:
           [[ "$actual" == "commit:$GITHUB_SHA" ]] || { echo 'Tag verification failed'; exit 1; }
           options=()
           if [[ "$version" == *-* ]]; then options+=(--prerelease); fi
-          gh release create "$tag" release-artifacts/*.tgz release-artifacts/browser-evidence.zip release-artifacts/SHA256SUMS release-artifacts/pack.json \
+          gh release create "$tag" release-artifacts/*.tgz release-artifacts/*.exe release-artifacts/*.zip release-artifacts/SHA256SUMS release-artifacts/pack.json release-artifacts/provenance.json \
             --verify-tag --target "$GITHUB_SHA" --title "B.A.R $version" --notes-file docs/RELEASE-NOTES.md "${options[@]}"
+  verify-published-windows:
+    name: Verify downloaded public Windows release
+    needs: release
+    runs-on: windows-2025
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.22.1'
+      - run: npm ci --ignore-scripts
+      - name: Download public EXE, verify checksum and PE header
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $version = (Get-Content package.json | ConvertFrom-Json).version
+          $name = "BAR-$version-windows-x64-setup.exe"
+          $base = "https://github.com/${{ github.repository }}/releases/download/v$version"
+          New-Item desktop-dist -ItemType Directory
+          Invoke-WebRequest "$base/$name" -OutFile "desktop-dist/$name"
+          Invoke-WebRequest "$base/SHA256SUMS" -OutFile desktop-dist/SHA256SUMS
+          $line = @(Get-Content desktop-dist/SHA256SUMS | Where-Object { $_.EndsWith("  $name") })
+          if ($line.Count -ne 1) { throw 'Missing or ambiguous EXE checksum' }
+          if ((Get-FileHash "desktop-dist/$name" -Algorithm SHA256).Hash.ToLower() -ne $line[0].Split(' ')[0]) { throw 'Published EXE checksum mismatch' }
+          $bytes = [IO.File]::ReadAllBytes((Resolve-Path "desktop-dist/$name"))
+          if ($bytes[0] -ne 77 -or $bytes[1] -ne 90) { throw 'Not a Windows executable' }
+          $pe = [BitConverter]::ToInt32($bytes, 60)
+          if ($bytes[$pe] -ne 80 -or $bytes[$pe+1] -ne 69 -or $bytes[$pe+2] -ne 0 -or $bytes[$pe+3] -ne 0) { throw 'Invalid PE signature' }
+      - name: Install downloaded release, exercise GUI, uninstall
+        shell: pwsh
+        run: ./scripts/windows-installer-smoke.ps1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: published-windows-download-verification
+          path: desktop-test-results/
+          if-no-files-found: warn
+          retention-days: 30
